@@ -95,7 +95,7 @@
 ```bash
 # 1. 确认在主仓库
 pwd
-# 应该显示：/d/opencode/knowledge-assistant
+# 应该显示：<main-repo>路径（根据实际环境）
 
 # 2. 确认在正确的分支
 git branch

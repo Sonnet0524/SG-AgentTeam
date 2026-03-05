@@ -267,8 +267,9 @@ class TestTemplateEngine:
 
 2. **切换到工作仓库**
    ```bash
-   # 切换到主仓库
-   cd /d/opencode/knowledge-assistant
+   # 切换到主仓库（从dev仓库）
+   cd ../knowledge-assistant
+   # 或使用绝对路径: cd <main-repo>
    
    # 拉取最新代码
    git pull origin main

@@ -176,11 +176,11 @@ PM（在开发仓库）
 **示例**：
 ```bash
 # Agent 在开发仓库阅读规范
-cd /d/opencode/knowledge-assistant-dev
+# 当前在 <dev-repo>
 cat development-guide/push-rules.md
 
 # Agent 在主仓库提交代码（遵循规范）
-cd /d/opencode/knowledge-assistant
+cd ../knowledge-assistant  # 切换到主仓库
 git add scripts/template_engine.py
 git commit -m "feat(template): add template engine
 
@@ -199,11 +199,11 @@ git push origin feature/a-template-engine
 **示例**：
 ```bash
 # PM 在主仓库完成功能开发
-cd /d/opencode/knowledge-assistant
+# 当前在 <main-repo>
 # ... 开发和合并 ...
 
 # PM 在开发仓库更新状态
-cd /d/opencode/knowledge-assistant-dev
+cd ../knowledge-assistant-dev  # 切换到开发仓库
 # 更新项目管理文档
 # 记录里程碑完成情况
 git add project-management/sprint-1.md

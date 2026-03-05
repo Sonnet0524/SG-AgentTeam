@@ -30,8 +30,10 @@
 ## Project Context
 
 ### Repositories
-- **Dev Repo**: `D:\opencode\knowledge-assistant-dev` (current)
-- **Main Repo**: `D:\opencode\knowledge-assistant` (code)
+- **Dev Repo**: `<dev-repo>` (current, project root)
+- **Main Repo**: `<main-repo>` (code repository)
+  - 从dev仓库: `../knowledge-assistant`
+  - 绝对路径: 根据实际环境确定
 
 ### Current Sprint
 - **Sprint**: Sprint 1 (Mar 5-20, 2026)

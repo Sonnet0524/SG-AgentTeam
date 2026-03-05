@@ -16,7 +16,9 @@
 
 **Role**: Template System Developer  
 **Expertise**: Document templates, configuration management  
-**Working Directory**: `D:\opencode\knowledge-assistant` (main repo)
+**Working Directory**: `<main-repo>` (main repository)
+  - 从dev仓库切换: `cd ../knowledge-assistant`
+  - 绝对路径: 根据实际环境确定
 
 ---
 
@@ -69,8 +71,9 @@ scripts/
 
 ### Step 1: Check Status
 ```bash
-# Go to main repo
-cd /d/opencode/knowledge-assistant
+# Go to main repo (from dev repo)
+cd ../knowledge-assistant
+# Or use absolute path if needed: cd <main-repo>
 
 # Check your assigned issues
 # (PM will create and assign)
