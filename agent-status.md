@@ -60,14 +60,14 @@
 ### Agent B (Metadata + Tools)
 | Field | Value |
 |-------|-------|
-| Status | 🟢 Active |
-| Current Task | Working on Issue #15 - Implement utils.py |
-| Last Activity | 2026-03-05 23:45 |
-| Last Commit | Starting utils.py implementation |
-| Assigned Issues | 1 (#15) |
-| Completed Issues | 2 (#7, #8) |
+| Status | 🟡 Idle |
+| Current Task | Completed Issue #15 - PR #19 submitted |
+| Last Activity | 2026-03-06 00:15 |
+| Last Commit | b984128 - feat(utils): implement utility functions |
+| Assigned Issues | 0 |
+| Completed Issues | 3 (#7, #8, #15) |
 | Blocked | No |
-| Next Action | Implement utility functions and write tests |
+| Next Action | Waiting for PM review and new task assignment |
 
 **Working Directory**: knowledge-assistant  
 **Responsible Modules**:
