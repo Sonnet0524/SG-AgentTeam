@@ -46,5 +46,7 @@ last_update: 2026-03-06
 # Quick Reference
 
 - 研究产出: `docs/research/`, `docs/methodology/`
-- 不产出: `knowledge-base/` (执行层知识库)
+- 不产出: `practice/knowledge-base/` (执行层知识库)
 - 研究视角: 框架设计层面，不涉及执行细节
+- Agent位置: `agents/research/` (框架层)
+- 其他Agent: `practice/agents/` (实践层)

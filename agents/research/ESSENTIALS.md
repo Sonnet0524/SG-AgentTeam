@@ -80,10 +80,15 @@ docs/                           # 研究框架文档
 ### ❌ 不负责的模块
 
 ```
-knowledge-base/                 # 执行层知识库
-agents/pm, data, template, test # 执行层Agent配置
-project-management/             # 执行层项目管理
-development-guide/              # 执行层开发指南
+practice/                        # 实践层（执行层）
+├── agents/                      # 实践层Agent配置
+│   ├── pm/
+│   ├── data/
+│   ├── template/
+│   └── test/
+├── knowledge-base/              # 执行层知识库
+├── management/                  # 项目管理
+└── development-guide/           # 开发指南
 ```
 
 ---

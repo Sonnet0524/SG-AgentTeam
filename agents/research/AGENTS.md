@@ -90,6 +90,16 @@ docs/                           # 研究框架文档
 ### ❌ 不负责的模块
 
 ```
+practice/                        # 实践层（执行层）
+├── agents/                      # 实践层Agent
+│   ├── pm/
+│   ├── data/
+│   ├── template/
+│   └── test/
+├── knowledge-base/              # 知识库
+├── management/                  # 项目管理
+└── development-guide/           # 开发指南
+```
 knowledge-base/                 # 执行层知识库
 agents/pm, data, template, test # 执行层Agent
 project-management/             # 执行层项目管理
