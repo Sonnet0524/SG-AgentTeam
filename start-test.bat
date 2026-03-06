@@ -14,7 +14,7 @@ echo Starting Test Team...
 echo.
 
 REM Check if in correct directory (dev repo)
-if not exist "agents\test" (
+if not exist "practice\agents\test" (
     echo Error: Not in dev repository!
     echo Please run this script from knowledge-assistant-dev root.
     pause

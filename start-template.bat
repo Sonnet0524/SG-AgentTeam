@@ -14,7 +14,7 @@ echo Starting Template Team...
 echo.
 
 REM Check if in correct directory (dev repo)
-if not exist "agents\template" (
+if not exist "practice\agents\template" (
     echo Error: Not in dev repository!
     echo Please run this script from knowledge-assistant-dev root.
     pause

@@ -17,7 +17,7 @@ echo "Starting Research Team..."
 echo ""
 
 # Check if in correct directory (dev repo)
-if [ ! -d "agents/research" ]; then
+if [ ! -d "practice/agents/research" ]; then
     echo "Error: Not in dev repository!"
     echo "Please run this script from knowledge-assistant-dev root."
     exit 1
