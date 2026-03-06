@@ -55,6 +55,19 @@
           "git log*": "allow"
         }
       }
+    },
+    "research": {
+      "description": "Research - 框架层面的研究专家，辅助用户形成Agent Team框架设计思路",
+      "mode": "primary",
+      "prompt": "{file:./agents/research/CATCH_UP.md}",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "git push": "ask",
+          "git add": "allow",
+          "git commit": "allow"
+        }
+      }
     }
   }
 }
