@@ -1,0 +1,205 @@
+# Agent Permissions Configuration
+# Version: 1.0
+# Last Updated: 2026-03-06
+
+# ============================================
+# Global Restrictions (Apply to all agents)
+# ============================================
+global-restrictions:
+  forbidden-commands:
+    - "rm -rf /"
+    - "rm -rf *"
+    - "sudo *"
+    - "chmod 777"
+    - "> /dev/sda"
+  forbidden-patterns:
+    - ".env"
+    - "credentials*"
+    - "*secret*"
+    - "*.pem"
+    - "*.key"
+
+# ============================================
+# Role Templates
+# ============================================
+roles:
+  admin:
+    description: "Full access, can manage all agents"
+    tools:
+      read: full
+      write: full
+      edit: full
+      bash: full
+      glob: full
+      grep: full
+      todo: all
+      task: can-create
+      webfetch: full
+      
+  developer:
+    description: "Module-specific access, no subagent creation"
+    tools:
+      read: full
+      write: module-only
+      edit: module-only
+      bash: restricted
+      glob: full
+      grep: full
+      todo: own
+      task: forbidden
+      webfetch: need-approval
+      
+  tester:
+    description: "Read-only code access, can write reports"
+    tools:
+      read: full
+      write: reports-only
+      edit: reports-only
+      bash: test-commands-only
+      glob: full
+      grep: full
+      todo: own
+      task: forbidden
+      webfetch: need-approval
+
+# ============================================
+# Agent-Specific Permissions
+# ============================================
+agents:
+  # ----------------------------------------
+  # PM Team - Administrator
+  # ----------------------------------------
+  pm-team:
+    role: admin
+    description: "Project management and coordination"
+    modules:
+      allowed-write:
+        - "docs/**"
+        - "*.md"
+        - "agents/**"
+        - "project-management/**"
+        - "HUMAN_ADMIN.md"
+        - "agent-status.md"
+      restricted:
+        - "scripts/**/*.py"  # Review only, no direct modification
+    bash:
+      allowed:
+        - "git *"
+        - "pytest *"
+        - "ls"
+        - "cat"
+        - "mkdir"
+        - "cp"
+        - "mv"
+        
+  # ----------------------------------------
+  # Data Team - Developer (Metadata & Tools)
+  # ----------------------------------------
+  data-team:
+    role: developer
+    description: "Metadata system and tools development"
+    modules:
+      allowed-write:
+        - "scripts/types.py"
+        - "scripts/utils.py"
+        - "scripts/metadata_parser.py"
+        - "scripts/tools/**"
+        - "tests/test_types.py"
+        - "tests/test_utils.py"
+        - "tests/test_metadata_parser.py"
+        - "tests/test_organize_notes.py"
+        - "tests/test_generate_index.py"
+        - "tests/test_extract_keywords.py"
+      restricted:
+        - "templates/**"
+        - "scripts/template_engine.py"
+        - "scripts/config.py"
+        - "tests/test_template*.py"
+    bash:
+      allowed:
+        - "git status"
+        - "git diff"
+        - "git add"
+        - "git commit"
+        - "git push origin"
+        - "pytest tests/test_types.py"
+        - "pytest tests/test_utils.py"
+        - "pytest tests/test_metadata_parser.py"
+        - "pytest tests/test_organize_notes.py"
+        - "pytest tests/test_generate_index.py"
+        - "black scripts/"
+        - "flake8 scripts/"
+        
+  # ----------------------------------------
+  # Template Team - Developer (Templates & Config)
+  # ----------------------------------------
+  template-team:
+    role: developer
+    description: "Template system and configuration development"
+    modules:
+      allowed-write:
+        - "templates/**"
+        - "scripts/template_engine.py"
+        - "scripts/config.py"
+        - "config.example.yaml"
+        - "tests/test_template_engine.py"
+        - "tests/test_config.py"
+        - "tests/test_template_integration.py"
+      restricted:
+        - "scripts/types.py"
+        - "scripts/utils.py"
+        - "scripts/metadata_parser.py"
+        - "scripts/tools/**"
+        - "tests/test_types.py"
+        - "tests/test_utils.py"
+        - "tests/test_metadata_parser.py"
+    bash:
+      allowed:
+        - "git status"
+        - "git diff"
+        - "git add"
+        - "git commit"
+        - "git push origin"
+        - "pytest tests/test_template*.py"
+        - "pytest tests/test_config.py"
+        - "black scripts/"
+        - "flake8 scripts/"
+        
+  # ----------------------------------------
+  # Test Team - Tester
+  # ----------------------------------------
+  test-team:
+    role: tester
+    description: "Testing and quality assurance"
+    modules:
+      allowed-write:
+        - "tests/reports/**"
+        - "test-data/**"
+        - "agents/test/*.md"
+      restricted:
+        - "scripts/**/*.py"
+        - "templates/**"
+        - "tests/test_*.py"  # Run only, don't modify test cases
+    bash:
+      allowed:
+        - "pytest *"
+        - "pytest --cov=*"
+        - "git status"
+        - "git log"
+        - "git diff"
+        - "ls"
+        - "cat"
+      forbidden:
+        - "git commit"
+        - "git push"
+        - "git checkout"
+        - "git merge"
+        - "rm *"
+
+# ============================================
+# Permission Check Helper
+# ============================================
+# PM Team should verify:
+# 1. Check git commits match agent permissions
+# 2. Verify file modifications are within scope
+# 3. Report violations in agent-status.md
