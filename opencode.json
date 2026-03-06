@@ -13,10 +13,10 @@
         }
       }
     },
-    "data": {
-      "description": "Data - 数据类型、解析器和工具",
+    "core": {
+      "description": "Core - 核心数据处理和工具开发",
       "mode": "primary",
-      "prompt": "{file:./practice/agents/data/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/core/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -28,10 +28,25 @@
         }
       }
     },
-    "template": {
-      "description": "Template - 模板引擎和配置系统",
+    "ai": {
+      "description": "AI - 向量嵌入和语义搜索",
       "mode": "primary",
-      "prompt": "{file:./practice/agents/template/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/ai/CATCH_UP.md}",
+      "permission": {
+        "edit": "ask",
+        "bash": {
+          "git push": "ask",
+          "pytest *": "allow",
+          "black *": "allow",
+          "flake8 *": "allow",
+          "mypy *": "allow"
+        }
+      }
+    },
+    "integration": {
+      "description": "Integration - opencode集成和连接器开发",
+      "mode": "primary",
+      "prompt": "{file:./practice/agents/integration/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {

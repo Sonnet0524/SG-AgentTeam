@@ -77,12 +77,17 @@ templates/**              # 模板文件
 - ✅ 操作后更新 agent-status.md
 - ✅ 及时 Review 提交的代码
 - ✅ 遇到阻塞立即通知用户
+- ✅ **Team结构调整时，同步更新启动脚本**
+  - 创建/删除对应的 start-{team}.bat 和 start-{team}.sh
+  - 更新启动脚本内容（Team名称、职责提示）
+  - 确保启动脚本与 opencode.json 配置一致
 
 ### 严格禁止
 - ❌ 跳过 Review 直接合并代码
 - ❌ 直接修改开发代码（只review）
 - ❌ 单方面改变项目范围
 - ❌ 忽略 Agent 的阻塞问题
+- ❌ Team调整后不更新启动脚本
 
 ---
 
@@ -90,8 +95,9 @@ templates/**              # 模板文件
 
 | Team | 分配任务 | Review重点 |
 |------|---------|-----------|
-| Data Team | 元数据/工具模块 | 解析逻辑、工具功能 |
-| Template Team | 模板/配置模块 | 模板引擎、配置管理 |
+| Core Team | 数据处理/工具模块 | 解析逻辑、工具功能 |
+| AI Team | 向量嵌入/语义搜索 | 算法实现、性能 |
+| Integration Team | opencode集成/连接器 | Skill设计、接口规范 |
 | Test Team | 测试任务 | 覆盖率、测试报告 |
 
 **沟通方式**：通过 Issue 和 PR 评论
@@ -115,6 +121,29 @@ templates/**              # 模板文件
 | 团队状态 | `agent-status.md` |
 | 用户总览 | `HUMAN_ADMIN.md` |
 
+## 📝 Team结构相关文件
+
+当Team结构发生变化时，需要同步更新以下文件：
+
+### 配置文件
+- `opencode.json` - Agent配置
+- `practice/agents/{team}/AGENTS.md` - Team角色定义
+- `practice/agents/{team}/CATCH_UP.md` - Team启动文档
+
+### 启动脚本（重要！）
+- `start-{team}.bat` - Windows启动脚本
+- `start-{team}.sh` - Linux/Mac启动脚本
+
+**启动脚本更新要求**：
+1. 创建新Team时，必须创建对应的启动脚本
+2. 删除Team时，必须删除对应的启动脚本
+3. 启动脚本内容要包含：
+   - Team名称和职责
+   - 工作目录检查
+   - 依赖检查（如有）
+   - 权限和职责提醒
+   - 任务获取方式
+
 ---
 
-**版本**: v3.0 | **更新日期**: 2026-03-06 | **维护者**: PM Team
+**版本**: v4.0 | **更新日期**: 2026-03-06 | **维护者**: PM Team
