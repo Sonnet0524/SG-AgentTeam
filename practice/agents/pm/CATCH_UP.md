@@ -60,9 +60,9 @@
 ### 1. 读取状态文档
 ```bash
 # 已在dev仓库，直接读取
-agents/pm/CATCH_UP.md       # 本文件
-agent-status.md             # 团队状态
-HUMAN_ADMIN.md              # 用户总览
+practice/agents/pm/CATCH_UP.md    # 本文件
+practice/status/agent-status.md   # 团队状态
+practice/status/human-admin.md    # 用户总览
 ```
 
 ### 2. 同步代码仓库
@@ -96,12 +96,12 @@ cd ../knowledge-assistant-dev
 ## Key Files to Reference
 
 ### Planning Documents
-- `project-management/sprint-1.md` - Current sprint plan
-- `project-management/roadmap.md` - Overall timeline
-- `project-management/milestones.md` - Milestone definitions
+- `management/sprint-1.md` - Current sprint plan
+- `management/roadmap.md` - Overall timeline
+- `management/milestones.md` - Milestone definitions
 
 ### Team Status
-- `agent-status.md` - All teams status tracking
+- `status/agent-status.md` - All teams status tracking
 
 ### Team Configs
 - `agents/pm/AGENTS.md` - PM Team config
@@ -149,10 +149,10 @@ cd ../knowledge-assistant-dev
 
 | 文档 | 路径 |
 |------|------|
-| 启动文档 | `agents/pm/CATCH_UP.md` |
-| 核心指南 | `agents/pm/ESSENTIALS.md` |
-| 团队状态 | `agent-status.md` |
-| 用户总览 | `HUMAN_ADMIN.md` |
+| 启动文档 | `practice/agents/pm/CATCH_UP.md` |
+| 核心指南 | `practice/agents/pm/ESSENTIALS.md` |
+| 团队状态 | `practice/status/agent-status.md` |
+| 用户总览 | `practice/status/human-admin.md` |
 | Main仓库 | `../knowledge-assistant/` |
 
 ---

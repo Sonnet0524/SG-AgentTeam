@@ -35,12 +35,12 @@ agent: pm
 
 ## Files
 ```
-project-management/
+management/
 ├── phases.md           # Phase规划
 └── tasks.md            # Task池
 
-agent-status.md         # Agent状态跟踪
-HUMAN_ADMIN.md          # 用户总览
+status/agent-status.md  # Agent状态跟踪
+status/human-admin.md   # 用户总览
 ```
 
 ## Tracking Metrics
@@ -142,4 +142,4 @@ HUMAN_ADMIN.md          # 用户总览
 ---
 
 **详细指南**: See `guides/` directory  
-**项目规划**: See `project-management/phases.md`
+**项目规划**: See `management/phases.md`

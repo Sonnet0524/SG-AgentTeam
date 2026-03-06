@@ -4,7 +4,7 @@
     "pm": {
       "description": "PM - 项目管理和协调",
       "mode": "primary",
-      "prompt": "{file:./agents/pm/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/pm/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -16,7 +16,7 @@
     "data": {
       "description": "Data - 数据类型、解析器和工具",
       "mode": "primary",
-      "prompt": "{file:./agents/data/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/data/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -31,7 +31,7 @@
     "template": {
       "description": "Template - 模板引擎和配置系统",
       "mode": "primary",
-      "prompt": "{file:./agents/template/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/template/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -46,7 +46,7 @@
     "test": {
       "description": "Test - 测试框架和质量保证",
       "mode": "primary",
-      "prompt": "{file:./agents/test/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/test/CATCH_UP.md}",
       "permission": {
         "edit": "deny",
         "bash": {
@@ -59,7 +59,7 @@
     "research": {
       "description": "Research - 框架层面的研究专家，辅助用户形成Agent Team框架设计思路",
       "mode": "primary",
-      "prompt": "{file:./agents/research/CATCH_UP.md}",
+      "prompt": "{file:./practice/agents/research/CATCH_UP.md}",
       "permission": {
         "edit": "ask",
         "bash": {

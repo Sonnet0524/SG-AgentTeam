@@ -1,8 +1,67 @@
-# Agent Team Framework - 研究成果文档
+# Agent Team Framework - 框架文档
 
-> 📚 本研究文档汇总了AI Agent协作模式的理论探索和实践验证成果
+> 📚 本目录包含Agent协作模式的**通用理论和方法论**
 
-**版本**: v1.0 | **更新**: 2026-03-06
+**性质**: 框架研究 | **可复用**: 是 | **更新**: 2026-03-06
+
+---
+
+## 📖 文档导航
+
+### 核心研究
+
+| 研究 | 问题 | 状态 |
+|------|------|------|
+| [Agent交互模式](research/agent-interaction/) | Agent之间如何高效交互？ | ✅ 核心成果 |
+| [信息流架构](research/information-architecture/) | 三层架构中信息流如何设计？ | 🔄 探索中 |
+| [Token-Based管理](research/token-based/) | Token能否作为工作量单位？ | ⚠️ 验证中 |
+
+### 方法论
+
+| 方法论 | 内容 | 链接 |
+|--------|------|------|
+| **Agent Team设计** | 设计理念、协作架构、最佳实践 | [agent-team-design.md](methodology/agent-team-design.md) |
+| 文档分层体系 | Level 0/1/2设计 | [document-hierarchy.md](methodology/document-hierarchy.md) |
+| Context最小化 | 优化策略 | [context-minimization.md](methodology/context-minimization.md) |
+| 边界隔离 | 冲突避免机制 | [boundary-isolation.md](methodology/boundary-isolation.md) |
+
+### 实践验证
+
+| 内容 | 说明 |
+|------|------|
+| [Knowledge Assistant验证](practice/knowledge-assistant/) | 本项目作为框架验证案例 |
+| [经验教训](practice/lessons-learned/) | 框架层面的总结 |
+
+### 参考资料
+
+| 内容 | 说明 |
+|------|------|
+| [对比分析](reference/comparison.md) | 与其他方法对比 |
+| [术语表](reference/glossary.md) | 统一术语定义 |
+| [未来方向](reference/future-directions.md) | 研究规划 |
+
+---
+
+## 🔗 与实践部分的关系
+
+本目录是**框架篇**，包含通用的理论和方法论，可复用于任何Agent协作项目。
+
+具体项目的实现细节在 **实践篇** (`practice/`) 中：
+- Agent配置
+- 项目管理
+- 知识库
+- 报告和日志
+- 状态文档
+
+```
+框架篇 (docs/)          实践篇 (practice/)
+    │                        │
+    ├─ 理论 ────────────────→ 指导实现
+    │                        │
+    ├─ 方法论 ─────────────→ 规范流程
+    │                        │
+    ←──────── 验证反馈 ──────┤
+```
 
 ---
 
@@ -24,7 +83,7 @@
 
 - **项目**: Knowledge Assistant
 - **规模**: 中型（55,000 tokens预估）
-- **团队**: 4个Agent
+- **团队**: 5个Agent
 - **周期**: 2026年3月-4月
 
 ---
@@ -109,219 +168,81 @@
 
 ---
 
-## 📊 研究成果速览
-
-### 核心发现
-
-| 研究领域 | 核心发现 | 证据强度 | 应用状态 |
-|---------|---------|---------|---------|
-| **Agent交互** | 文档化交互可行且有效 | 强（实践验证） | ✅ 已应用 |
-| **信息流架构** | Agent/Human First需动态平衡 | 中（部分验证） | 🔄 探索中 |
-| **Token-Based** | 简单场景有效，复杂场景待改进 | 中（实验数据） | ⚠️ 实验性 |
+## 📊 核心成果
 
 ### 数据指标
 
-**Context优化**:
-- 信息加载：↓ 93%（600行→40行）
-- 启动时间：↓ 80%（5秒→1秒）
-- Token成本：↓ 80%
+| 指标 | 传统方式 | 本框架 | 改进 |
+|------|---------|--------|------|
+| Context使用 | 600行 | 40行 | ↓93% |
+| 协作冲突 | 每周3次 | 0次 | ↓100% |
+| 预测准确率 | 50% | 85% | ↑70% |
+| 启动时间 | 5秒 | 1秒 | ↓80% |
 
-**协作效率**:
-- 代码冲突：↓ 100%（从每周3次到零）
-- Review时间：↓ 75%（2小时→30分钟）
-- 任务切换：↓ 60%（边界清晰）
+### 核心发现
 
-**进度管理**:
-- 预测准确率：↑ 70%（50%→85%）
-- 进度透明度：↑ 100%（实时可视化）
+| 研究领域 | 核心发现 | 应用状态 |
+|---------|---------|---------|
+| **Agent交互** | 文档化交互可行且有效 | ✅ 已应用 |
+| **信息流架构** | Agent/Human First需动态平衡 | 🔄 探索中 |
+| **Token-Based** | 简单场景有效，复杂场景待改进 | ⚠️ 实验性 |
+
+---
+
+## 📖 方法论概览
+
+### 核心方法论
+
+详见 [Agent Team设计方法论](methodology/agent-team-design.md)，包含：
+- Agent First vs Human First 设计原则
+- Context窗口最小化策略
+- 边界隔离机制
+- Token-Based管理方法
+- 最佳实践指南
+
+### 支撑方法论
+
+| 方法论 | 核心思想 | 链接 |
+|--------|---------|------|
+| 文档分层体系 | Level 0/1/2按需加载 | [详细说明](methodology/document-hierarchy.md) |
+| Context最小化 | 每个字节都有价值 | [详细说明](methodology/context-minimization.md) |
+| 边界隔离 | 零交叉修改 | [详细说明](methodology/boundary-isolation.md) |
 
 ---
 
 ## 🛠️ 实践验证
 
-### Knowledge Assistant项目
+本项目（Knowledge Assistant）作为框架的验证案例，验证了：
+- ✅ 文档化交互可行且有效
+- ✅ 分层文档体系显著降低Context消耗
+- ✅ 明确的模块边界消除协作冲突
+- ⚠️ Token-Based管理需进一步优化
 
-**项目背景**: 个人知识管理助手，需多Agent协作开发
-
-**团队配置**:
-- PM Agent：项目管理和协调
-- Data Agent：数据层开发
-- Template Agent：应用层开发
-- Test Agent：质量保证
-
-**验证重点**:
-- Agent交互模式的有效性
-- 文档化上下文交换的可行性
-- Message Queue协议的完整性
-
-**实践结果**: 📊 [查看详细报告](practice/knowledge-assistant/)
+**详细报告**: [实践验证](practice/knowledge-assistant/) | [经验教训](practice/lessons-learned/)
 
 ---
 
-### 经验教训
+## 🚀 未来方向
 
-#### ✅ 什么有效
+**详细规划**: [future-directions.md](reference/future-directions.md)
 
-- 基于文档的上下文交换
-- 清晰的模块边界划分
-- 分层文档体系
-
-#### ❌ 什么无效
-
-- 过度复杂的交互协议
-- 静态的Agent First/Human First划分
-- 忽略Agent个体差异
-
-#### 💡 意外发现
-
-- 文档不仅是信息载体，也是协调工具
-- PM Agent的协调价值超预期
-- Token-Based管理揭示了工作模式
-
-**详细内容**: 💡 [经验教训总结](practice/lessons-learned/)
+| 时间 | 重点 |
+|------|------|
+| 短期（3月） | 交互协议标准化、Token模型优化、Message Queue原型 |
+| 中期（6月） | 半自动化协作、跨项目验证、工具链开发 |
+| 长期（1年） | 完整框架、开源生态、理论升华 |
 
 ---
 
-## 📖 方法论总结
+## 🤝 参与贡献
 
-### 文档分层体系
+欢迎：理论探讨、实验验证、问题发现、创新想法
 
-**三级文档设计**:
-- Level 0（必需）：<50行，启动时加载
-- Level 1（按需）：<100行，工作时加载
-- Level 2（参考）：不限，按需查询
-
-**核心价值**: 最小化Context占用，最大化信息效用
-
-**详细说明**: 📖 [文档分层体系](methodology/document-hierarchy.md)
+**参与方式**: [GitHub Discussions](https://github.com/Sonnet0524/knowledge-assistant-dev/discussions) | [提交Issue](https://github.com/Sonnet0524/knowledge-assistant-dev/issues)
 
 ---
 
-### Context最小化
-
-**目标**: 每个字节的信息都有价值
-
-**方法**:
-- 按需披露
-- 索引驱动
-- 主动清理
-
-**详细说明**: 📉 [Context最小化](methodology/context-minimization.md)
-
----
-
-### 边界隔离
-
-**目标**: 零交叉修改
-
-**方法**:
-- 单向依赖
-- 明确归属
-- 代码审查
-
-**详细说明**: 🔒 [边界隔离](methodology/boundary-isolation.md)
-
----
-
-## 🚀 未来研究方向
-
-### 短期（3个月）
-
-1. **交互协议标准化**
-   - 制定完整的协议规范
-   - 提供参考实现
-   - 收集社区反馈
-
-2. **Token-Based模型优化**
-   - 引入复杂度因子
-   - 动态调整机制
-   - 个体差异建模
-
-3. **Message Queue原型**
-   - 设计消息格式
-   - 实现基础原型
-   - 小规模测试
-
----
-
-### 中期（6个月）
-
-1. **自动化协作**
-   - 半自动化交互流程
-   - 智能决策辅助
-   - 异常自动处理
-
-2. **跨项目验证**
-   - 不同类型项目
-   - 不同规模团队
-   - 不同Agent配置
-
-3. **工具链开发**
-   - 交互监控工具
-   - 性能分析工具
-   - 可视化界面
-
----
-
-### 长期（1年）
-
-1. **完整框架**
-   - 形成通用框架
-   - 支持多种场景
-   - 易于定制
-
-2. **开源生态**
-   - 开源核心组件
-   - 建立社区
-   - 收集反馈迭代
-
-3. **理论升华**
-   - 总结通用规律
-   - 发表研究论文
-   - 推动行业发展
-
----
-
-## 🤝 参与讨论
-
-本研究欢迎：
-
-- 💬 **理论探讨**: 对研究假设和方法论的建议
-- 🧪 **实验验证**: 在其他场景中的应用验证
-- 🐛 **问题发现**: 实践中发现的问题和局限
-- 💡 **创新想法**: 新的研究方向和方法
-
-**参与方式**:
-- [GitHub Discussions](https://github.com/Sonnet0524/knowledge-assistant-dev/discussions)
-- [提交Issue](https://github.com/Sonnet0524/knowledge-assistant-dev/issues)
-
----
-
-## 📚 相关资源
-
-### 学术研究
-
-- Multi-Agent System研究
-- 协作机器人理论
-- 分布式系统设计
-
-### 工业实践
-
-- GitHub Copilot Workspace
-- AutoGPT
-- BabyAGI
-
-### 开源项目
-
-- LangChain
-- AutoGen
-- CrewAI
-
-**详细对比**: 🔍 [与其他方法对比](reference/comparison.md)
-
----
-
-## 📝 引用本研究
+## 📝 引用
 
 ```bibtex
 @misc{agent-team-framework-2026,
@@ -335,7 +256,4 @@
 
 ---
 
-**研究团队**: Agent Team  
-**创建时间**: 2026-03-05  
-**最后更新**: 2026-03-06  
-**许可协议**: MIT License
+**维护者**: Research Agent | **更新**: 2026-03-06

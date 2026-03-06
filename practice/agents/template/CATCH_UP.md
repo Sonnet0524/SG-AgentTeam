@@ -82,8 +82,8 @@ scripts/
 ### 1. 读取状态文档
 ```bash
 # 已在dev仓库，直接读取
-agents/template/CATCH_UP.md  # 本文件
-agent-status.md              # 项目状态
+practice/agents/template/CATCH_UP.md  # 本文件
+practice/status/agent-status.md       # 项目状态
 ```
 
 ### 2. 同步代码仓库
@@ -166,9 +166,9 @@ cd ../knowledge-assistant-dev
 
 | 文档 | 路径 |
 |------|------|
-| 启动文档 | `agents/template/CATCH_UP.md` |
-| 核心指南 | `agents/template/ESSENTIALS.md` |
-| 项目状态 | `agent-status.md` |
+| 启动文档 | `practice/agents/template/CATCH_UP.md` |
+| 核心指南 | `practice/agents/template/ESSENTIALS.md` |
+| 项目状态 | `practice/status/agent-status.md` |
 | Main仓库 | `../knowledge-assistant/` |
 
 ---
