@@ -8,6 +8,12 @@
 
 ## 📖 文档导航
 
+### 🔥 最新研究进展
+
+| 研究 | 核心成果 | 链接 |
+|------|---------|------|
+| **质量门控理论** | Human介入触发器机制 | [研究日志](research/research-log.md) |
+
 ### 核心研究
 
 | 研究 | 问题 | 状态 |
@@ -15,6 +21,20 @@
 | [Agent交互模式](research/agent-interaction/) | Agent之间如何高效交互？ | ✅ 核心成果 |
 | [信息流架构](research/information-architecture/) | 三层架构中信息流如何设计？ | 🔄 探索中 |
 | [Token-Based管理](research/token-based/) | Token能否作为工作量单位？ | ⚠️ 验证中 |
+
+### 调研报告
+
+| 报告 | 内容 | 链接 |
+|------|------|------|
+| **Agent Team设计调研** | 业界主流框架设计思路分析 | [详细报告](research/agent-team-design-survey.md) \| [执行摘要](research/agent-team-design-survey-summary.md) |
+| **框架快速对比** | 一页纸快速了解各框架特点 | [对比参考](research/framework-comparison.md) |
+
+### 研究记录
+
+| 文档 | 说明 |
+|------|------|
+| [研究日志](research/research-log.md) | 完整的研究过程记录，包含所有关键交流 |
+| [Agent模板标准（待研究）](research/agent-template-standard.md) | Agent的定义与行为标准（待启动） |
 
 ### 方法论
 

@@ -21,6 +21,19 @@
 | **[框架篇](#-框架篇)** | 理论、方法论、设计思想 | 想了解Agent协作模式的研究者 |
 | **[实践篇](#-实践篇)** | 本项目的Agent Team实现 | 想参考具体实现的实践者 |
 
+### 🔬 研究文档
+
+完整的研究成果位于 [docs/research/](docs/research/)
+
+| 研究课题 | 核心成果 | 状态 |
+|---------|---------|------|
+| [质量门控理论](docs/research/quality-gates/) | Human介入触发器 | ✅ 理论突破 |
+| [Agent社会架构](docs/research/agent-society/) | Agent定义标准 | ✅ 基础完成 |
+| [Agent交互模式](docs/research/agent-interaction/) | 文档化交互 | ✅ 核心成果 |
+| [Agent模板标准](docs/research/agent-template-standard/) | Agent行为规范 | 🔜 待研讨 |
+
+📄 **完整研究过程**: [研究日志](docs/research/research-log.md)
+
 ---
 
 # 🎓 框架篇
@@ -60,7 +73,82 @@
 
 ---
 
-### 信息流架构 🔄
+## 🔥 最新理论突破
+
+### 质量门控 = Human介入触发器
+
+**研究突破**: 质量门控的本质重新定义
+
+```
+旧理解：能力边界声明（Agent间协作）
+新理解：Human介入触发器（PM自主决策边界）
+```
+
+**核心价值**:
+- 🎯 **确定性评估** - 判断结果是否确定
+- ✅ **可接受性评估** - 判断结果是否可接受
+- 🔍 **混淆判断** - 判断是否存在理解偏差
+- 👤 **Human介入决策** - 决定何时呼叫Human
+
+**工作机制**:
+```
+Agent输出 → PM评估
+├─ 确定性HIGH + 可接受性HIGH + 无混淆 → PM自主决策
+└─ 确定性LOW 或 可接受性LOW 或 存在混淆 → 呼叫Human
+```
+
+**Token效率**: ~15 tokens实现关键决策机制
+
+📖 [完整研究过程](docs/research/research-log.md)
+
+---
+
+### Agent社会架构理论
+
+**研究问题**: 如何定义Agent vs Subagent？如何设计Agent社会架构？
+
+**核心定义**:
+
+| 类型 | 生命周期 | 存在方式 | 创建者 |
+|------|---------|---------|--------|
+| **Agent** | 持久（Persistent） | Serve模式 | System/PM |
+| **Subagent** | 临时（Transient） | Task-bound | Agent |
+
+**关键洞察**: 差异在于**生命周期**，不在能力高低
+
+**PM Agent模型**:
+```
+PM能力 = LLM能力 + Prompt设计 + 经验积累
+真正价值 = 最优协调（而非最强能力）
+决策边界 = 质量门控判断
+```
+
+📖 [调研报告](docs/research/agent-team-design-survey.md) | [执行摘要](docs/research/agent-team-design-survey-summary.md)
+
+---
+
+### 框架本质重新定位
+
+**理论突破**:
+
+```
+从："人机协作框架" → Human是核心参与者
+到："多智能体协同框架" → Human是最小化参与的决策者
+
+核心理念：
+├─ PM Agent是自主智能体（不是人类工具）
+├─ Human参与最小化（只在必要时介入）
+├─ 质量门控判断介入时机
+└─ PM Agent主导模式（首问负责制）
+```
+
+📖 [研究日志](docs/research/research-log.md) | [框架对比](docs/research/framework-comparison.md)
+
+---
+
+## 🔄 持续研究
+
+### 信息流架构
 
 **研究问题**: "人-智能-基础能力"三层架构中，信息流如何设计？
 
