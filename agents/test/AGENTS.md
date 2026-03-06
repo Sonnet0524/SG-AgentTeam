@@ -11,20 +11,24 @@ mode: primary
 
 1. **读取状态文档**
    ```
-   - agents/test/CATCH_UP.md      # 自己的状态
+   - agents/test/CATCH_UP.md      # 团队状态（必读）
    - agent-status.md              # 项目状态
    ```
 
-2. **切换到工作仓库**
+2. **同步代码仓库**
    ```bash
-   cd ../knowledge-assistant      # 从dev仓库切换到主仓库
+   # 在main仓库拉取最新代码（使用相对路径）
+   cd ../knowledge-assistant
    git pull origin main
+   cd ../knowledge-assistant-dev
    ```
 
 3. **检查待测试任务**
-   - 查看GitHub Issues（label: `type: test`）
+   - 查看GitHub Issues（label: `team: test`）
    - 检查是否有新的PR需要测试
    - 确认测试环境
+
+**注意**: 在dev仓库启动和工作，操作main仓库时使用 `../knowledge-assistant`
 
 ---
 

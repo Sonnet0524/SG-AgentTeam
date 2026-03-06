@@ -12,7 +12,7 @@ agent: template
 
 ## Quick Status
 
-**Last Updated**: 2026-03-06 02:15  
+**Last Updated**: 2026-03-06 02:30  
 **Status**: 🟡 Revision Needed  
 **Current Task**: PR #17 需要修正 - 创建只包含templates/的新PR  
 **Progress**: 等待创建新PR
@@ -40,7 +40,7 @@ agent: template
 
 ---
 
-## Module Boundaries (当前实际结构)
+## Module Boundaries
 
 ### ✅ You Own
 ```
@@ -52,27 +52,12 @@ templates/                  # 模板文件
 └── knowledge-card.md
 ```
 
-**未来将扩展**（重构后）:
-```
-scripts/
-├── template/              # 模板引擎
-│   └── engine.py
-├── config/                # 配置管理
-│   └── manager.py
-└── tools/
-    └── create_document.py
-```
-
 ### ❌ You Do NOT Own (Data Team's Modules)
 ```
 scripts/
 ├── types.py               # Data Team
 ├── utils.py               # Data Team
 ├── metadata_parser.py     # Data Team
-└── tools/
-    ├── organize_notes.py
-    ├── generate_index.py
-    └── extract_keywords.py
 ```
 
 ---
@@ -86,73 +71,100 @@ scripts/
 
 ---
 
-## Next Actions
+## 🚀 启动流程
 
-### 🔴 Immediate (现在)
-1. **创建新的干净PR**
-   ```bash
-   # 在main仓库
-   git checkout main && git pull
-   git checkout -b feature/templates-clean
-   git checkout feature/a-document-templates -- templates/
-   git add templates/
-   git commit -m "feat(template): create 5 document templates - Closes #14"
-   git push -u origin feature/templates-clean
-   gh pr create --title "feat(template): create 5 document templates" --body "..."
-   ```
+**在dev仓库启动，操作main仓库时使用路径**
 
-2. **关闭旧PR #17**
-   ```bash
-   gh pr close 17 --comment "Superseded by clean PR"
-   ```
+### 1. 读取状态文档
+```bash
+# 已在dev仓库，直接读取
+agents/template/CATCH_UP.md  # 本文件
+agent-status.md              # 项目状态
+```
 
-### 🟡 After PR Merged
-1. 开始模板引擎开发 (Issue待分配)
-2. 开始配置系统开发 (Issue待分配)
+### 2. 同步代码仓库
+```bash
+# 在main仓库拉取最新代码（使用相对路径）
+cd ../knowledge-assistant
+git pull origin main
+cd ../knowledge-assistant-dev
+```
+
+### 3. 检查分配的任务
+- 查看GitHub Issues（label: `team: template`）
+- 检查 `agent-status.md` 中的状态
 
 ---
 
-## Startup Checklist
+## Next Actions
 
-- [ ] 读取 `agents/template/CATCH_UP.md` (本文件)
-- [ ] 读取 `agent-status.md` 了解项目状态
-- [ ] 切换到main仓库: `cd ../knowledge-assistant`
-- [ ] 拉取最新代码: `git pull origin main`
-- [ ] 检查分配的Issues
+### 🔴 Immediate (现在)
+**创建新的干净PR**
+
+```bash
+# 1. 在main仓库操作
+cd ../knowledge-assistant
+
+# 2. 创建新分支
+git checkout main && git pull
+git checkout -b feature/templates-clean
+
+# 3. 只复制模板文件
+git checkout feature/a-document-templates -- templates/
+
+# 4. 提交
+git add templates/
+git commit -m "feat(template): create 5 document templates - Closes #14"
+
+# 5. 推送并创建PR
+git push -u origin feature/templates-clean
+gh pr create --title "feat(template): create 5 document templates" --body "..."
+
+# 6. 关闭旧PR
+gh pr close 17 --comment "Superseded by clean PR"
+
+# 7. 返回dev仓库更新状态
+cd ../knowledge-assistant-dev
+```
+
+---
+
+## Working Directory
+
+**启动位置**: `D:\opencode\knowledge-assistant-dev` (dev仓库)
+
+**操作main仓库时**:
+- 相对路径: `../knowledge-assistant`
+- 或使用绝对路径访问
 
 ---
 
 ## Status Update
 
-**完成后更新** `agent-status.md`:
+**更新 `agent-status.md`**:
 ```markdown
 ### Template Team
 | Field | Value |
 |-------|-------|
-| Status | 🟢 Active / 🟡 Idle / 🔴 Blocked |
+| Status | 🟢 Active / 🟡 Idle |
 | Current Task | [当前任务] |
 | Last Activity | YYYY-MM-DD HH:MM |
-| Next Action | [下一步] |
 ```
 
 ---
 
 ## Quick Reference
 
-- 项目状态: `agent-status.md`
-- 核心指南: `agents/template/ESSENTIALS.md`
-- 详细指南: `agents/template/guides/`
-- PM文档: `agents/pm/AGENTS.md`
+| 文档 | 路径 |
+|------|------|
+| 启动文档 | `agents/template/CATCH_UP.md` |
+| 核心指南 | `agents/template/ESSENTIALS.md` |
+| 项目状态 | `agent-status.md` |
+| Main仓库 | `../knowledge-assistant/` |
 
 ---
 
-## Need Help?
-
-1. 查看 `agents/template/ESSENTIALS.md` 详细说明
-2. 在Issue中提问
-3. 更新 `agent-status.md` 标记为 Blocked
-4. 等待PM协助
-
----
-
-**Remember**: 只修改 `templates/` 和未来的 `scripts/template/`, `scripts/config/` 模块
+**Remember**: 
+- 在dev仓库启动和工作
+- 只修改 `templates/` 目录
+- 操作main仓库时使用 `../knowledge-assistant`

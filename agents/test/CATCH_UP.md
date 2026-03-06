@@ -12,7 +12,7 @@ agent: test
 
 ## Quick Status
 
-**Last Updated**: 2026-03-06 02:20  
+**Last Updated**: 2026-03-06 02:30  
 **Status**: 🟢 Ready to Merge  
 **Current Task**: PR #18 已批准，需要 rebase 到最新 main  
 **Progress**: 等待 rebase 后合并
@@ -69,52 +69,72 @@ test-data/
 
 ---
 
-## Next Actions
+## 🚀 启动流程
 
-### 🟢 Immediate (现在)
-1. **Rebase PR #18 到最新 main**
-   ```bash
-   # 在main仓库
-   git checkout test/integration-framework
-   git fetch origin
-   git rebase origin/main
-   git push -f origin test/integration-framework
-   ```
+**在dev仓库启动，操作main仓库时使用路径**
 
-2. **确认CI通过后通知PM**
+### 1. 读取状态文档
+```bash
+# 已在dev仓库，直接读取
+agents/test/CATCH_UP.md     # 本文件
+agent-status.md             # 项目状态
+```
 
-### 🟡 After PR Merged
-1. 等待 Template Team 和 Data Team 完成新功能
-2. 为新功能编写测试
-3. 准备测试报告
+### 2. 同步代码仓库
+```bash
+# 在main仓库拉取最新代码（使用相对路径）
+cd ../knowledge-assistant
+git pull origin main
+cd ../knowledge-assistant-dev
+```
+
+### 3. 检查分配的任务
+- 查看GitHub Issues（label: `team: test`）
+- 检查 `agent-status.md` 中的状态
 
 ---
 
-## Your Services
+## Next Actions
 
-```python
-# 你提供的测试服务
-def test_module(team: str, module: str) -> TestReport
-def measure_coverage(module: str) -> CoverageReport
-def review_code(pr: int) -> ReviewReport
-def validate_quality(codebase: str) -> QualityReport
+### 🟢 Immediate (现在)
+**Rebase PR #18 到最新 main**
+
+```bash
+# 1. 在main仓库操作
+cd ../knowledge-assistant
+
+# 2. 切换到feature分支
+git checkout test/integration-framework
+
+# 3. Rebase
+git fetch origin
+git rebase origin/main
+
+# 4. 推送
+git push -f origin test/integration-framework
+
+# 5. 确认PR状态
+gh pr view 18
+
+# 6. 返回dev仓库更新状态
+cd ../knowledge-assistant-dev
 ```
 
 ---
 
-## Startup Checklist
+## Working Directory
 
-- [ ] 读取 `agents/test/CATCH_UP.md` (本文件)
-- [ ] 读取 `agent-status.md` 了解项目状态
-- [ ] 切换到main仓库: `cd ../knowledge-assistant`
-- [ ] 拉取最新代码: `git pull origin main`
-- [ ] 检查待测试的PR和Issues
+**启动位置**: `D:\opencode\knowledge-assistant-dev` (dev仓库)
+
+**操作main仓库时**:
+- 相对路径: `../knowledge-assistant`
+- 或使用绝对路径访问
 
 ---
 
 ## Status Update
 
-**完成后更新** `agent-status.md`:
+**更新 `agent-status.md`**:
 ```markdown
 ### Test Team
 | Field | Value |
@@ -122,27 +142,22 @@ def validate_quality(codebase: str) -> QualityReport
 | Status | 🟢 Ready to Merge |
 | Current Task | PR #18 rebased, waiting for merge |
 | Last Activity | YYYY-MM-DD HH:MM |
-| Next Action | [下一步] |
 ```
 
 ---
 
 ## Quick Reference
 
-- 项目状态: `agent-status.md`
-- 核心指南: `agents/test/ESSENTIALS.md`
-- 详细指南: `agents/test/guides/`
-- PM文档: `agents/pm/AGENTS.md`
+| 文档 | 路径 |
+|------|------|
+| 启动文档 | `agents/test/CATCH_UP.md` |
+| 核心指南 | `agents/test/ESSENTIALS.md` |
+| 项目状态 | `agent-status.md` |
+| Main仓库 | `../knowledge-assistant/` |
 
 ---
 
-## Need Help?
-
-1. 查看 `agents/test/ESSENTIALS.md` 详细说明
-2. 在Issue中提问
-3. 更新 `agent-status.md` 标记为 Blocked
-4. 等待PM协助
-
----
-
-**Remember**: 只创建测试文件和报告，不修改开发代码
+**Remember**: 
+- 在dev仓库启动和工作
+- 只创建测试文件和报告
+- 操作main仓库时使用 `../knowledge-assistant`

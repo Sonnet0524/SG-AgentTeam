@@ -15,16 +15,20 @@ mode: primary
    - agent-status.md              # 项目状态
    ```
 
-2. **切换到工作仓库**
+2. **同步代码仓库**
    ```bash
-   cd ../knowledge-assistant      # 从dev仓库切换到主仓库
+   # 在main仓库拉取最新代码（使用相对路径）
+   cd ../knowledge-assistant
    git pull origin main
+   cd ../knowledge-assistant-dev
    ```
 
 3. **检查分配的任务**
    - 查看GitHub Issues（label: `team: template`）
    - 确认当前分支
    - 检查依赖模块状态
+
+**注意**: 在dev仓库启动和工作，操作main仓库时使用 `../knowledge-assistant`
 
 ---
 

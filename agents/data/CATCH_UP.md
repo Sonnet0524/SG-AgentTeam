@@ -12,7 +12,7 @@ agent: data
 
 ## Quick Status
 
-**Last Updated**: 2026-03-06 02:15  
+**Last Updated**: 2026-03-06 02:30  
 **Status**: 🟢 Ready to Merge  
 **Current Task**: PR #19 已批准，需要 rebase 到最新 main  
 **Progress**: 等待 rebase 后合并
@@ -39,35 +39,18 @@ agent: data
 
 ---
 
-## Module Boundaries (当前实际结构)
+## Module Boundaries
 
 ### ✅ You Own
 ```
 scripts/
 ├── types.py               # 类型定义
 ├── metadata_parser.py     # 元数据解析器
-├── utils.py               # 工具函数 (在PR #19中)
+├── utils.py               # 工具函数
 └── tools/                 # 工具脚本
     ├── organize_notes.py
     ├── generate_index.py
     └── extract_keywords.py
-```
-
-**未来将扩展**（重构后）:
-```
-scripts/
-├── core/
-│   ├── types.py
-│   ├── schema.py
-│   └── validators.py
-├── parsers/
-│   ├── metadata_parser.py
-│   ├── document_parser.py
-│   └── yaml_parser.py
-└── utils/
-    ├── file_ops.py
-    ├── data_ops.py
-    └── text_ops.py
 ```
 
 ### ❌ You Do NOT Own (Template Team's Modules)
@@ -76,8 +59,6 @@ templates/                 # Template Team
 scripts/
 ├── template_engine.py     # Template Team (未来)
 ├── config.py              # Template Team (未来)
-└── tools/
-    └── create_document.py # Template Team
 ```
 
 ---
@@ -91,57 +72,83 @@ scripts/
 
 ---
 
-## Next Actions
+## 🚀 启动流程
 
-### 🟢 Immediate (现在)
-1. **Rebase PR #19 到最新 main**
-   ```bash
-   # 在main仓库
-   git checkout feature/b-utils-c
-   git fetch origin
-   git rebase origin/main
-   git push -f origin feature/b-utils-c
-   ```
+**在dev仓库启动，操作main仓库时使用路径**
 
-2. **确认CI通过后通知PM**
+### 1. 读取状态文档
+```bash
+# 已在dev仓库，直接读取
+agents/data/CATCH_UP.md     # 本文件
+agent-status.md             # 项目状态
+```
 
-### 🟡 After PR Merged
-1. 开始工具脚本开发 (Issue待分配)
-   - organize_notes.py
-   - generate_index.py
-   - extract_keywords.py
+### 2. 同步代码仓库
+```bash
+# 在main仓库拉取最新代码（使用相对路径）
+cd ../knowledge-assistant
+git pull origin main
+cd ../knowledge-assistant-dev
+```
+
+### 3. 检查分配的任务
+- 查看GitHub Issues（label: `team: data`）
+- 检查 `agent-status.md` 中的状态
 
 ---
 
-## Startup Checklist
+## Next Actions
 
-- [ ] 读取 `agents/data/CATCH_UP.md` (本文件)
-- [ ] 读取 `agent-status.md` 了解项目状态
-- [ ] 切换到main仓库: `cd ../knowledge-assistant`
-- [ ] 拉取最新代码: `git pull origin main`
-- [ ] 检查分配的Issues
+### 🟢 Immediate (现在)
+**Rebase PR #19 到最新 main**
+
+```bash
+# 1. 在main仓库操作
+cd ../knowledge-assistant
+
+# 2. 切换到feature分支
+git checkout feature/b-utils-c
+
+# 3. Rebase
+git fetch origin
+git rebase origin/main
+
+# 4. 推送
+git push -f origin feature/b-utils-c
+
+# 5. 确认PR状态
+gh pr view 19
+
+# 6. 返回dev仓库更新状态
+cd ../knowledge-assistant-dev
+```
+
+---
+
+## Working Directory
+
+**启动位置**: `D:\opencode\knowledge-assistant-dev` (dev仓库)
+
+**操作main仓库时**:
+- 相对路径: `../knowledge-assistant`
+- 或使用绝对路径访问
 
 ---
 
 ## Public APIs You Provide
 
 ```python
-# 其他Agent可以导入使用
+# 其他Team可以导入使用
 from scripts.types import DocumentMetadata, Document
 from scripts.metadata_parser import MetadataParser
 from scripts.utils import read_file, write_file, ensure_directory
-
-# 使用示例
-metadata = DocumentMetadata(title="Test", date="2026-03-06")
-parser = MetadataParser()
-meta, body = parser.parse(document_content)
 ```
 
 ---
 
 ## Status Update
 
-**完成后更新** `agent-status.md`:
+**更新 `agent-status.md`**:
 ```markdown
 ### Data Team
 | Field | Value |
@@ -149,27 +156,22 @@ meta, body = parser.parse(document_content)
 | Status | 🟢 Ready to Merge |
 | Current Task | PR #19 rebased, waiting for merge |
 | Last Activity | YYYY-MM-DD HH:MM |
-| Next Action | [下一步] |
 ```
 
 ---
 
 ## Quick Reference
 
-- 项目状态: `agent-status.md`
-- 核心指南: `agents/data/ESSENTIALS.md`
-- 详细指南: `agents/data/guides/`
-- PM文档: `agents/pm/AGENTS.md`
+| 文档 | 路径 |
+|------|------|
+| 启动文档 | `agents/data/CATCH_UP.md` |
+| 核心指南 | `agents/data/ESSENTIALS.md` |
+| 项目状态 | `agent-status.md` |
+| Main仓库 | `../knowledge-assistant/` |
 
 ---
 
-## Need Help?
-
-1. 查看 `agents/data/ESSENTIALS.md` 详细说明
-2. 在Issue中提问
-3. 更新 `agent-status.md` 标记为 Blocked
-4. 等待PM协助
-
----
-
-**Remember**: 只修改 `scripts/types.py`, `scripts/metadata_parser.py`, `scripts/utils.py`, `scripts/tools/` 模块
+**Remember**: 
+- 在dev仓库启动和工作
+- 只修改 `scripts/types.py`, `scripts/utils.py`, `scripts/metadata_parser.py`
+- 操作main仓库时使用 `../knowledge-assistant`
