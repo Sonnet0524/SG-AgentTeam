@@ -2,63 +2,197 @@
 agent: research
 status: Active
 last_update: 2026-03-07
-session: research-methodology-design
+session: search-r-methodology
 ---
 
 # Current Research Focus
 
-**Research Direction**: Agent社会架构理论体系构建 + Research Agent方法论研究
+**Research Direction**: Agent社会架构理论体系构建 + SEARCH-R方法论实践
 
 **Active Topics**:
-1. ✅ **质量门控的本质** - 已突破：Human介入触发器
-2. ✅ **Agent vs Subagent定义** - 已明确：长期vs临时
-3. ✅ **Research Agent方法论** - 已完成：观察-检索-思考-探讨-反思
+1. ✅ **Agent系统架构理论** - 已完成：四层架构清晰定义
+2. ✅ **质量门控分层定义** - 已突破：元认知意识 + Skills化
+3. ✅ **SEARCH-R方法论** - 已确立：完整命名和流程
 4. 🔜 **Agent模板标准** - 待研究：定义与行为标准
 
-**Current Phase**: 方法论框架设计完成，准备进入实践验证
+**Current Phase**: 核心理论框架已完成，准备实践验证
 
 ---
 
 # Recent Observations
 
-## 重大方法论突破（2026-03-07）
+## 重大方法论确立（2026-03-07）
 
-### 突破：Research Agent方法论框架
+### 突破：SEARCH-R方法论正式命名
 
-**核心框架**：
+**方法论命名**：
 ```
-观察-检索-思考-探讨-反思 循环
+SEARCH-R方法论
 
-观察：Agent Team实践、文档变化、协作痕迹
-检索：对话中按需、用户指定方向
-思考：识别模式、提出问题、第一性原理推导
-探讨：洞察+挑战的配合模式
-反思：验证洞察、修正假设、自我反思
+S - Survey（观察调研）
+E - Explore（探索检索）
+A - Analyze（分析思考）
+R - Review（评审探讨）
+C - Confirm（确认验证）
+H - Harvest（收获产出）
+R - Reflect（反思迭代）
+
+循环：S → E → A → R → C → H → R → (回到S)
 ```
 
-**研究深度定义**：
+**命名理由**：
+- Search（搜索）+ Reflect（反思）
+- 符合研究本质：不断搜索真理
+- 避免与强化学习（RL）混淆
+
+**仓库重命名**：
+- GitHub仓库：research-agent → search-r
+- 本地目录：已完成重命名
+- README：已更新
+S - Survey（观察调研）
+E - Explore（探索检索）
+A - Analyze（分析思考）
+R - Review（评审探讨）
+C - Confirm（确认验证）
+H - Harvest（收获产出）
+R - Reflect（反思迭代）
+
+循环：S → E → A → R → C → H → R → (回到S)
 ```
-Level 0: 第一性原理层 - 追问"为什么"直到无法再追问
-Level 1: 理论框架层 - 构建理论模型、形式化表达
-Level 2: 设计原则层 - 从理论推导原则
-Level 3: 实现思路层 - 从原则推导思路
-Level 4: 实施建议层 ❌ - 非Research Agent职责
+
+**关键特征**：
+- 明确的研究循环
+- 每个阶段都有清晰的任务
+- 自然形成闭环
+
+---
+
+### 突破2：Agent系统架构理论
+
+**完整架构**：
+```
+Agent系统 = 身份层 + 能力系统 + 记忆系统 + 访问系统
+
+身份层：AGENTS.md（角色定义 + 核心能力）
+
+能力系统：
+  核心能力：定义在AGENTS.md中，不可分离
+  通用能力：Skills，可复用、按需加载
+
+记忆系统：
+  身份记忆：AGENTS.md
+  状态记忆：CATCH_UP.md
+  经验记忆：experiences/
+  会话记忆：session-log.md
+
+访问系统：
+  记忆索引：memory-index.yaml
+  检索机制：按需加载
+  压缩机制：短期→长期
+```
+
+**关键洞察**：记忆系统 ≠ 访问系统
+- 记忆 = 内容本身
+- 索引 = 检索方法
+
+---
+
+### 突破3：质量门控分层定义
+
+**完整定义**：
+```
+质量门控 = 元认知意识 + 评估规则 + 评估工具
+
+元认知意识（不可分离）：
+  定义在AGENTS.md中
+  "我知道自己什么时候不知道"
+  Agent的核心属性
+
+评估规则（可Skills化）：
+  定义在Skills中
+  确定性、可接受性、混淆判断规则
+  可配置的标准
+
+评估工具（可Skills化）：
+  定义在Skills中
+  质量门控Schema、评估流程
+  可复用的工具
+```
+
+**关键区分**：
+- 元认知意识 → Agent核心属性（不分离）
+- 评估规则 + 工具 → 可Skills化（按需加载）
+
+---
+
+### 突破4：Agent vs Subagent正确定义
+
+**区分标准**：决策自主性（不是文档完整性）
+
+```
+Agent（有自主权）：
+  - 可以自主决策
+  - 独立的任务空间
+  - 对结果负责
+  示例：PM Agent、Research Agent
+
+Subagent（无自主权）：
+  - 任务绑定
+  - 决策受限
+  - 执行分配的任务
+  示例：AI Team、Core Team、Integration Team
 ```
 
 **关键洞察**：
-```
-Human的双重角色：
+- 不是"有没有文档"决定Agent vs Subagent
+- 而是"有没有自主权"决定
+- Subagent也可以有完整的三层记忆
 
-角色1：信息传递者（不算"Human介入"）
-  - Agent间信息传递
-  - 不做决策
-  - 不影响"Human参与最小化"
+---
 
-角色2：关键决策者（算"Human介入"）
-  - 研究方向选择
-  - 设计方案决策
-  - 影响项目方向
+### 突破5：Skills分离原则
+
+**三大原则**：
 ```
+原则1：非每次都需要 → 可以Skills化
+原则2：可多个Agent复用 → 应该Skills化
+原则3：相对独立的能力单元 → 可以Skills化
+```
+
+**Skills分类**：
+- 决策支持类：quality-gate、risk-assessment
+- 工作流类：git-workflow、review-process
+- 规范类：coding-standards、documentation-guide
+- 领域知识类：embedding-models、vector-search
+
+**AGENTS.md精简原则**：
+- 只保留：身份 + 核心能力
+- Skills化：通用能力
+- 目标：~5k tokens
+
+---
+
+### 突破6：记忆系统 vs 访问系统
+
+**关键区分**：
+```
+记忆系统（内容）：
+  性质：存储信息内容本身
+  类比：图书馆的书
+
+访问系统（方法）：
+  性质：检索内容的方法
+  类比：图书馆目录
+
+索引 ≠ 记忆
+索引是"目录"，不是"内容"
+索引是"方法"，不是"记忆"
+```
+
+**理论价值**：
+- 避免混淆"记忆层"与"访问方法"
+- 避免过度设计（索引的索引的索引...）
+- 建立清晰的系统架构边界
 
 ---
 
