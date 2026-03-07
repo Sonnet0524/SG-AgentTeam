@@ -31,13 +31,18 @@
 - ✅ 重新开放 Issue #9 (摘要生成)
 - ✅ 关闭过时Issues #1, #2, #3
 - ✅ 更新 Issue #16 记录调查结果
+- ✅ **用户决策：Core Team重新开发**
+- ✅ 为Issues #8, #9设置Milestone和通知
+- ✅ 更新Core Team CATCH_UP.md
 
 **当前阻塞**:
 - Issue #14 (集成测试) - 跳过3个测试场景
 - Issue #15 (发布管理) - 功能不完整
 
-**等待决策**: 
-需要用户决定由哪个Team完成这两个任务
+**任务分配决策**: ✅ **已完成**
+- 方案1：Core Team重新开发（已确认）
+- 预计工期：2天
+- 截止日期：2026-03-09
 
 ---
 
@@ -144,11 +149,11 @@
 
 | Team | Location | Role | Status | Current Task |
 |------|----------|------|--------|--------------|
-| **PM Team** | `agents/pm/` | 项目管理 | 🟢 Active | 问题调查完成，等待任务分配决策 |
-| **Core Team** | `agents/core/` | 核心数据处理 | 🔴 Blocked | Issues #8, #9 重新开放，等待开发 |
+| **PM Team** | `agents/pm/` | 项目管理 | 🟢 Complete | 任务分配完成，等待PR Review |
+| **Core Team** | `agents/core/` | 核心数据处理 | 🔴 Active | Sprint 2开发中 (Issues #8, #9) |
 | **AI Team** | `agents/ai/` | 向量嵌入+搜索 | ✅ Complete | Sprint 1完成 |
 | **Integration Team** | `agents/integration/` | opencode集成 | ✅ Sprint 3 Done | Skill和Agent配置完成 |
-| **Test Team** | `agents/test/` | 测试质量保证 | ⚠️ Blocked | Issue #14集成测试受阻 |
+| **Test Team** | `agents/test/` | 测试质量保证 | ⏳ Waiting | 等待Core Team完成 |
 | **Research** | `agents/research/` | 框架研究 | 🔒 External | 外部Agent |
 
 **注意**: Research Agent为外部Agent，不受PM Team管控
@@ -234,26 +239,31 @@ Overall: 0% (Ready to start)
 
 ---
 
-### Core Team (Sprint 2 Blocked 🔴)
+### Core Team (Sprint 2 Active 🔴)
 
-**Status**: 🔴 Blocked  
-**Current Sprint**: Sprint 2 任务未完成，Issues重新开放
+**Status**: 🔴 Active  
+**Current Sprint**: Sprint 2 开发中，Issues #8, #9已分配
 
-**Investigation Result**:
-- Issues #8, #9 被错误关闭
-- 代码未合并，extraction.py不存在
-- CATCH_UP.md显示"Ready to Start"，实际未开始开发
+**Task Assignment**:
+- ✅ Issues #8, #9 已重新开放并分配
+- ✅ Milestone设置为Sprint 2
+- ✅ CATCH_UP.md已更新
+- ✅ 已通知Core Team开始开发
 
-**Tasks (Reopened)**:
-- [ ] TASK-CORE1: 关键词提取 (Issue #8) - **重新开放**
-- [ ] TASK-CORE2: 摘要生成 (Issue #9) - **重新开放**
+**Tasks (In Progress)**:
+- [ ] TASK-CORE1: 关键词提取 (Issue #8) - **开发中**
+- [ ] TASK-CORE2: 摘要生成 (Issue #9) - **开发中**
+
+**Timeline**:
+- 开始时间：2026-03-07
+- 预计完成：2026-03-09（2天后）
 
 **Dependencies**:
 - jieba >= 0.42.1
 - scikit-learn >= 1.3.0
 - networkx >= 3.0
 
-**Next**: 等待PM Team决策任务分配
+**Next**: 等待Core Team提交PR
 
 ---
 
@@ -323,22 +333,21 @@ Overall: 0% (Ready to start)
 
 ## Next Actions
 
-### 🔴 Priority 0: 解决Core Team代码缺失（阻塞发布）
+### 🔴 Priority 0: Core Team开发进行中
 
-**需要用户决策**:
-1. **Core Team重新开发**
-   - 重新分配Issues #8, #9给Core Team
-   - 预计工期：4天
-   - 风险：Core Team之前未开始，可能需要时间熟悉
+**状态**: ✅ 已安排，Core Team开发中
 
-2. **其他Team接手**
-   - AI Team或Integration Team接手
-   - 需要评估各Team工作量
-   - 可能需要跨Team协作
+**已完成行动**:
+1. ✅ Issues #8, #9 重新开放
+2. ✅ 设置Milestone: Sprint 2
+3. ✅ 通知Core Team开始开发
+4. ✅ 更新Core Team CATCH_UP.md
+5. ✅ 明确交付要求和截止日期
 
-**PM Team建议**:
-- 考虑到Core Team状态为"Ready to Start"，建议由Core Team完成
-- 如果Core Team资源不足，可考虑Integration Team接手（已完成Sprint 3任务）
+**等待中**:
+- Core Team提交PR（预计2026-03-09）
+- PM Team Review代码
+- 代码合并到main
 
 ### Priority 1: 完成Sprint 3（等Core Team任务完成后）
 
