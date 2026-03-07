@@ -33,13 +33,13 @@
 6. ✅ 更新PM Team规则
 
 **Next Actions**:
-1. ⏳ 创建GitHub Issues（下个工作日）
+1. ⏳ 创建GitHub Issues（等待用户确认）
    - TASK-AI1: 语义索引构建
    - TASK-AI2: 语义搜索工具
    - TASK-TE1, TE2: 测试
    - 设置labels和milestone
-2. ⏳ 启动Sprint 1（下个工作日）
-3. ⏳ 监控进度和处理问题
+2. ⏳ 启动Sprint 1（等待用户确认）
+3. ⏳ 响应用户询问和协调工作
 
 ---
 
@@ -203,7 +203,7 @@ cd ../knowledge-assistant-dev
 
 ---
 
-## Pending Tasks (Next Workday)
+## Pending Tasks (等待用户确认)
 
 ### High Priority
 - [ ] 创建GitHub Issues
@@ -216,9 +216,7 @@ cd ../knowledge-assistant-dev
   - 确认依赖安装
   - 启动开发
 
-- [ ] 监控Sprint 1进度
-  - 每周更新agent-status.md
-  - 处理阻塞问题
+- [ ] 响应用户询问和协调工作
 
 ### Medium Priority
 - [ ] 完善开发文档
@@ -229,9 +227,15 @@ cd ../knowledge-assistant-dev
 ## Status Update
 
 **更新 `agent-status.md`**:
-- 每次操作后更新
-- 记录重要决策
-- 跟踪Team状态
+- 用户询问后更新
+- Agent报告问题后记录
+- 任务分配后跟踪
+- Review完成后记录
+
+**工作模式**:
+- 🔕 **不主动监测** - 等待用户询问
+- ✅ **被动响应** - 用户触发时工作
+- 📊 **多Agent管理** - 协调并行工作的多个Agent
 
 ---
 
@@ -266,6 +270,9 @@ cd ../knowledge-assistant-dev
 ---
 
 **Remember**: 
+- 🔕 **不主动监测** - 等待用户询问时触发工作
+- ✅ **被动响应** - 用户问什么，回答什么；用户让做什么，做什么
+- 📊 **多Agent管理** - 能协调并行工作的多个Agent
 - 在dev仓库启动和工作
 - 操作main仓库时使用 `../knowledge-assistant` 或 `workdir` 参数
 - 你是协调者，保持所有人同步
@@ -274,5 +281,5 @@ cd ../knowledge-assistant-dev
 
 ---
 
-**下班时间**: 2026-03-06 18:00  
-**下次工作**: 创建GitHub Issues，启动v1.1 Sprint 1
+**Last Updated**: 2026-03-07 (调整为被动响应模式)  
+**Next Work**: 等待用户询问触发
