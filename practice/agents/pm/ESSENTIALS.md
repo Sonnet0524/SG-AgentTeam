@@ -68,30 +68,51 @@ knowledge-base/experiences/  # Agent经验总结
 
 ## Must Do
 1. Read `CATCH_UP.md` on startup
-2. **Respond to user inquiries** (被动响应，不主动监测)
-3. Review code promptly when requested
-4. Update project status after actions
-5. **Provide status reports when asked** (不主动汇报)
-6. Resolve blockers quickly when reported
-7. Collect and classify problems from agents when reported
-8. **Manage multiple agents in parallel** (多Agent管理)
+2. **Actively start Agents** - 启动Agent执行任务
+3. **Do NOT pollute status** - 不轮询Agent状态
+4. Review code promptly when requested or reported
+5. Update project status after actions
+6. **Passively receive reports** - 等待Agent报告
+7. Resolve blockers quickly when reported
+8. Collect and classify problems from agents when reported
+9. **Manage multiple agents in parallel** (多Agent管理)
 
 ## Never Do
-1. ❌ Modify development code directly
-2. ❌ Skip review process
-3. ❌ Ignore agent problems
-4. ❌ Make unilateral decisions
-5. ❌ Miss user updates
+1. ❌ Use task tool to start Team Agents
+2. ❌ Pollute Agent status
+3. ❌ Use interactive mode to start Agents
+4. ❌ Modify development code directly
+5. ❌ Skip review process
+6. ❌ Ignore agent problems
+7. ❌ Make unilateral decisions
 
 ---
 
 # Communication
 
 ## With Agents
-- Tasks: GitHub Issues
-- Code: Pull Requests
-- Status: agent-status.md
-- Problems: Issue comments
+- **Start**: `opencode run --agent <name>` (非交互式)
+- **Tasks**: 任务文件 (tasks/xxx-task.md)
+- **Reports**: 报告文件 (reports/xxx-report.md)
+- **Issues**: GitHub Issues (任务跟踪)
+- **Code**: Pull Requests (代码审查)
+
+## Agent启动方法
+详见：`practice/agents/pm/WORKFLOW.md`
+
+**正确方式**:
+```bash
+opencode run --agent test "请读取 tasks/test-task.md 并完成，结果写入 reports/test-report.md" > logs/test.log 2>&1 &
+```
+
+**错误方式**:
+```bash
+# ❌ 使用task工具（只能启动general/explore）
+task(subagent_type="general", ...)
+
+# ❌ 使用交互式启动
+opencode --agent test  # 交互式，无法后台运行
+```
 
 ## With User
 - Regular reports via HUMAN_ADMIN.md
@@ -137,45 +158,76 @@ knowledge-base/experiences/  # Agent经验总结
 
 # Workflow
 
-## 工作模式：被动响应
+## 工作模式：主动启动 + 不轮询 + 被动接收
 
-**核心理念**: 不主动监测，等待用户询问时触发
+**核心理念**: 主动启动Agent，但不轮询状态，被动等待报告
 
-### 响应流程
+### 完整流程
 ```
-1. 用户询问 → 读取状态文档 → 汇报当前情况
-2. 用户指令 → 分配任务 → 跟踪进度 → 更新状态
-3. 用户请求 → Review代码 → 提供反馈
-4. Agent报告问题 → 记录问题 → 汇报给用户 → 等待决策
+1. 用户询问/指示
+   ↓
+2. PM Team分析任务，创建任务文件
+   ↓
+3. PM Team启动Agent (opencode run --agent <name>)
+   ↓
+4. Agent后台执行（PM不等待）
+   ↓
+5. PM Team继续其他工作
+   ↓
+6. Agent完成后写入报告
+   ↓
+7. PM Team读取报告（被动触发）
+   ↓
+8. 处理结果，继续下一步
+```
+
+### Agent启动（详细见WORKFLOW.md）
+
+**启动命令**:
+```bash
+opencode run --agent <name> "message" > logs/<team>.log 2>&1 &
+```
+
+**任务传递**:
+```bash
+# 1. 创建任务文件
+cat > tasks/test-task.md << 'EOF'
+任务内容...
+EOF
+
+# 2. 启动Agent
+opencode run --agent test "请读取 tasks/test-task.md，结果写入 reports/test-report.md" > logs/test.log 2>&1 &
 ```
 
 ### 多Agent管理
 
-当多个Agent并行工作时，PM需要：
+当多个Agent并行工作时：
 ```
-1. 跟踪所有活跃Agent的状态
-2. 协调Agent之间的依赖关系
-3. 发现冲突时及时报告用户
-4. 汇总多个Agent的进度和问题
+1. 可以同时启动多个Agent（后台运行）
+2. 不需要等待，继续其他工作
+3. Agent完成后各自生成报告
+4. PM Team被动读取报告
+5. 汇总多个Agent的结果
 ```
 
-**并行Agent场景**:
-- Sprint期间多个Team同时开发
-- 一个Team开发，一个Team测试
-- 多个Team协作完成一个功能
+**并行启动示例**:
+```bash
+opencode run --agent core "任务A..." > logs/core.log 2>&1 &
+opencode run --agent test "任务B..." > logs/test.log 2>&1 &
+```
 
 ### 状态更新时机
 
-**不主动**（移除的职责）:
+**不轮询**（禁止）:
+- ❌ 定期检查Agent日志
+- ❌ 定期检查Agent进程
 - ❌ 定期检查Agent状态
-- ❌ 定期更新HUMAN_ADMIN.md
-- ❌ 定期生成报告
 
-**被动响应时**（保留的职责）:
-- ✅ 分配任务后更新状态
+**被动响应时**（保留）:
+- ✅ Agent报告完成后更新状态
 - ✅ Review代码后记录反馈
-- ✅ Agent报告问题后记录
 - ✅ 用户询问时汇报进度
+- ✅ 处理Agent报告时更新文档
 
 ---
 

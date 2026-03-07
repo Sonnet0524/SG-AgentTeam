@@ -6,96 +6,70 @@
 
 ## Quick Status
 
-**Last Updated**: 2026-03-06 18:00  
-**Current Phase**: v1.1 Ready to Start  
-**Status**: 🟢 Planning Committed  
+**Last Updated**: 2026-03-07 20:30  
+**Current Phase**: v1.1 Sprint 2 Complete  
+**Status**: 🟢 Active - Test Team运行集成测试中  
 
 ---
 
 ## Current Focus
 
-**Primary Task**: v1.1规划完成，准备启动开发
+**Primary Task**: 完成v1.1集成测试和发布
 
 **Completed Actions**:
-1. ✅ 完成v1.1整体规划
-2. ✅ 更新PRD（反映opencode集成架构）
-3. ✅ 完成团队结构调整
-   - 新建：Core Team, AI Team, Integration Team
-   - 更新：PM Team, Test Team
-   - 归档：Data Team, Template Team
-4. ✅ 创建所有配置文档
-   - opencode.json
-   - 所有Team的AGENTS.md和CATCH_UP.md
-5. ✅ 创建启动脚本
-   - start-core.bat/sh
-   - start-ai.bat/sh
-   - start-integration.bat/sh
-6. ✅ 更新PM Team规则
+1. ✅ Sprint 1完成（AI Team + Test Team）
+2. ✅ Sprint 2完成（Core Team + Integration Team）
+   - Core Team: 关键词提取 + 摘要生成
+   - Integration Team: 邮件连接器 + Skill/Agent配置
+3. ✅ 发现并解决Core Team Sprint 2代码缺失问题
+4. ✅ PM Team工作模式更新
+   - 主动启动Agent + 不轮询 + 被动接收
+   - 创建WORKFLOW.md文档
 
 **Next Actions**:
-1. ⏳ 创建GitHub Issues（等待用户确认）
-   - TASK-AI1: 语义索引构建
-   - TASK-AI2: 语义搜索工具
-   - TASK-TE1, TE2: 测试
-   - 设置labels和milestone
-2. ⏳ 启动Sprint 1（等待用户确认）
-3. ⏳ 响应用户询问和协调工作
+1. 🔄 Test Team集成测试运行中（后台）
+   - 任务文件: tasks/test-team-task.md
+   - 报告文件: reports/test-report.md (待生成)
+2. ⏳ 等待Test Team报告
+3. ⏳ 准备v1.1发布（Issue #15）
 
 ---
 
-## 今日工作总结 (2026-03-06)
+## 今日工作总结 (2026-03-07)
 
 ### 主要成果
 
-#### 1. v1.1规划完成
-- **PRD更新**: 明确了opencode主控 + knowledge-assistant工具库的架构
-- **用户场景**: 分析了三个核心场景（构建知识库、语义检索、多源搜索）
-- **任务分配**: 创建了详细的v1.1-task-assignments.md
+#### 1. Sprint 1 & 2 完成 ✅
+- **Sprint 1**: AI Team语义索引和搜索 ✅
+- **Sprint 2**: Core Team知识提取 + Integration Team集成 ✅
 
-#### 2. 团队结构调整
-**调整原因**:
-- Data Team职责过重（数据处理+AI算法）
-- Template Team职责不匹配集成工作
-- 需要专门的AI Team支持v1.1的语义搜索功能
+#### 2. 发现并解决问题 ✅
+- Test Team集成测试发现Core Team代码缺失
+- PM Team调查确认问题
+- Core Team重新开发并完成
+- PR #17已合并
 
-**调整结果**:
+#### 3. PM Team工作模式更新 ✅
+**新工作模式**:
+- ✅ 主动启动Agent
+- ❌ 不轮询状态
+- ✅ 被动接收报告
+
+**新增文档**:
+- WORKFLOW.md - Agent管理完整指南
+- tasks/ - 任务文件目录
+- reports/ - 报告文件目录
+- logs/ - 日志文件目录
+
+**Agent启动方法**:
+```bash
+opencode run --agent <name> "message" > logs/<team>.log 2>&1 &
 ```
-v1.0:
-- Data Team (已归档)
-- Template Team (已归档)
 
-v1.1:
-- Core Team (数据处理)
-- AI Team (向量嵌入+搜索) ← NEW
-- Integration Team (opencode集成)
-```
-
-#### 3. 配置文档完善
-- ✅ 所有Team的AGENTS.md（6个Team）
-- ✅ 所有Team的CATCH_UP.md（6个Team）
-- ✅ opencode.json更新
-- ✅ 状态文档更新
-
-#### 4. 启动脚本创建
-- ✅ start-core.bat/sh
-- ✅ start-ai.bat/sh
-- ✅ start-integration.bat/sh
-- ✅ 删除旧的start-data和start-template
-
-#### 5. 规则完善
-- ✅ PM Team规则更新
-  - 增加启动脚本管理要求
-  - 记录Team结构变更流程
-  - 明确Research Agent为外部Agent
-
-#### 6. 代码提交
-- ✅ Dev仓库提交（commit b295344）
-  - 32个文件变更
-  - +2809行，-303行
-- ✅ Main仓库提交（commit 11465d6）
-  - 4个文件变更
-  - +1764行
-- ✅ 所有更改已推送到远程仓库
+#### 4. Test Team启动 ✅
+- 任务文件: tasks/test-team-task.md
+- 后台运行中
+- 等待报告: reports/test-report.md
 
 ---
 
@@ -103,11 +77,11 @@ v1.1:
 
 | Team | Status | Location | Current Task |
 |------|--------|----------|--------------|
-| PM Team | 🟢 Complete | agents/pm/ | 规划完成，准备启动 |
-| Core Team | 🟢 Ready | agents/core/ | Sprint 2准备 |
-| AI Team | 🟢 Ready | agents/ai/ | Sprint 1准备 |
-| Integration Team | 📋 Planned | agents/integration/ | Sprint 2-3准备 |
-| Test Team | 🟢 Ready | agents/test/ | 支持所有Sprint |
+| PM Team | 🟢 Active | agents/pm/ | 等待Test Team报告 |
+| Core Team | ✅ Complete | agents/core/ | Sprint 2完成 |
+| AI Team | ✅ Complete | agents/ai/ | Sprint 1完成 |
+| Integration Team | ✅ Complete | agents/integration/ | Sprint 2-3完成 |
+| Test Team | 🔄 Running | agents/test/ | 集成测试运行中 |
 | Research | 🔒 External | agents/research/ | 外部Agent，不受管控 |
 
 ---
@@ -132,9 +106,9 @@ knowledge-assistant (Tool Library)
 ```
 
 ### v1.1 Sprint Plan
-- **Sprint 1** (Week 1-2): AI Team - 索引+搜索
-- **Sprint 2** (Week 3-4): Core Team + Integration Team - 提取+连接器
-- **Sprint 3** (Week 5-6): Integration Team - 集成+发布
+- **Sprint 1** (Week 1-2): AI Team - 索引+搜索 ✅ 完成
+- **Sprint 2** (Week 3-4): Core Team + Integration Team - 提取+连接器 ✅ 完成
+- **Sprint 3** (Week 5-6): Integration Team - 集成+发布 ✅ 开发完成，测试中
 
 ---
 
@@ -203,24 +177,20 @@ cd ../knowledge-assistant-dev
 
 ---
 
-## Pending Tasks (等待用户确认)
+## Pending Tasks
 
 ### High Priority
-- [ ] 创建GitHub Issues
-  - TASK-AI1: 语义索引构建
-  - TASK-AI2: 语义搜索工具
-  - TASK-TE1, TE2: 测试
-  - 设置labels和milestone
+- [ ] 读取Test Team报告（等待生成）
+  - reports/test-report.md
 
-- [ ] 通知AI Team开始Sprint 1
-  - 确认依赖安装
-  - 启动开发
-
-- [ ] 响应用户询问和协调工作
+- [ ] 完成v1.1发布准备（Issue #15）
+  - 准备Release Notes
+  - 更新版本号
+  - 创建发布文档
 
 ### Medium Priority
-- [ ] 完善开发文档
-- [ ] 设置里程碑追踪
+- [ ] 总结v1.1开发经验
+- [ ] 更新项目文档
 
 ---
 
@@ -233,9 +203,16 @@ cd ../knowledge-assistant-dev
 - Review完成后记录
 
 **工作模式**:
-- 🔕 **不主动监测** - 等待用户询问
-- ✅ **被动响应** - 用户触发时工作
-- 📊 **多Agent管理** - 协调并行工作的多个Agent
+- ✅ **主动启动Agent** - 分配任务后立即启动
+- ❌ **不轮询状态** - 不主动检查Agent进度
+- ✅ **被动接收报告** - 等待Agent报告
+
+**Agent启动方法**:
+详见 `practice/agents/pm/WORKFLOW.md`
+
+```bash
+opencode run --agent <name> "message" > logs/<team>.log 2>&1 &
+```
 
 ---
 
@@ -245,10 +222,9 @@ cd ../knowledge-assistant-dev
 |------|------|
 | 启动文档 | `practice/agents/pm/CATCH_UP.md` |
 | 核心指南 | `practice/agents/pm/ESSENTIALS.md` |
+| **工作流程** | `practice/agents/pm/WORKFLOW.md` ⭐ |
 | 团队状态 | `practice/status/agent-status.md` |
 | 用户总览 | `practice/status/human-admin.md` |
-| 任务分配 | `practice/status/task-assignments/v1.1-task-assignments.md` |
-| Main仓库 | `../knowledge-assistant/` |
 
 ---
 
@@ -270,9 +246,10 @@ cd ../knowledge-assistant-dev
 ---
 
 **Remember**: 
-- 🔕 **不主动监测** - 等待用户询问时触发工作
-- ✅ **被动响应** - 用户问什么，回答什么；用户让做什么，做什么
-- 📊 **多Agent管理** - 能协调并行工作的多个Agent
+- ✅ **主动启动Agent** - 分配任务后立即启动（opencode run）
+- ❌ **不轮询状态** - 不主动检查Agent进度
+- ✅ **被动接收报告** - Agent完成后读取报告
+- ❌ **禁止使用task工具启动Team Agent** - task只能启动general/explore
 - 在dev仓库启动和工作
 - 操作main仓库时使用 `../knowledge-assistant` 或 `workdir` 参数
 - 你是协调者，保持所有人同步
@@ -281,5 +258,5 @@ cd ../knowledge-assistant-dev
 
 ---
 
-**Last Updated**: 2026-03-07 (调整为被动响应模式)  
-**Next Work**: 等待用户询问触发
+**Last Updated**: 2026-03-07 20:30  
+**Next Work**: 等待Test Team报告或用户指示

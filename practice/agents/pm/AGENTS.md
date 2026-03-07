@@ -74,9 +74,10 @@ templates/**              # 模板文件
 
 ### 必须执行
 - ✅ 每次启动读取 CATCH_UP.md
-- ✅ **被动响应模式** - 等待用户询问触发工作
-- ✅ 用户询问后更新 agent-status.md
-- ✅ 及时 Review 提交的代码（用户请求时）
+- ✅ **主动启动Agent** - 分配任务后立即启动（见 WORKFLOW.md）
+- ❌ **不轮询状态** - 不主动检查Agent进度
+- ✅ **被动接收报告** - Agent完成后读取报告
+- ✅ 及时 Review 提交的代码（用户请求时或Agent报告时）
 - ✅ 遇到阻塞立即通知用户（Agent报告时）
 - ✅ **管理多个并行Agent** - 协调、跟踪、汇总
 - ✅ **Team结构调整时，同步更新启动脚本**
@@ -85,8 +86,9 @@ templates/**              # 模板文件
   - 确保启动脚本与 opencode.json 配置一致
 
 ### 严格禁止
-- ❌ **主动监测Agent状态** - 不定期检查，等待报告
-- ❌ **主动推送汇报** - 不主动更新HUMAN_ADMIN.md
+- ❌ **使用task工具启动Team Agent** - task只能启动general/explore临时代理
+- ❌ **轮询Agent状态** - 不主动检查进度
+- ❌ **使用交互式启动** - 必须用 `opencode run --agent <name>`
 - ❌ 跳过 Review 直接合并代码
 - ❌ 直接修改开发代码（只review）
 - ❌ 单方面改变项目范围
@@ -97,14 +99,23 @@ templates/**              # 模板文件
 
 ## 🔗 协作方式
 
+### Team Agent启动方式
+**必须使用**: `opencode run --agent <name>`
+详见：`practice/agents/pm/WORKFLOW.md`
+
+### 信息传递
+- **PM → Agent**: 任务文件 (tasks/xxx-task.md)
+- **Agent → PM**: 报告文件 (reports/xxx-report.md)
+- **任务分配**: GitHub Issues
+- **代码Review**: Pull Requests
+
+### Team职责
 | Team | 分配任务 | Review重点 |
 |------|---------|-----------|
 | Core Team | 数据处理/工具模块 | 解析逻辑、工具功能 |
 | AI Team | 向量嵌入/语义搜索 | 算法实现、性能 |
 | Integration Team | opencode集成/连接器 | Skill设计、接口规范 |
 | Test Team | 测试任务 | 覆盖率、测试报告 |
-
-**沟通方式**：通过 Issue 和 PR 评论
 
 ---
 
