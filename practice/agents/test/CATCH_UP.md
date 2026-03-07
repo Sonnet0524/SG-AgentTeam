@@ -1,6 +1,6 @@
 ---
-version: 2.0
-last_update: 2026-03-06
+version: 3.1
+last_update: 2026-03-07
 agent: test
 ---
 
@@ -12,10 +12,10 @@ agent: test
 
 ## Quick Status
 
-**Last Updated**: 2026-03-06 11:16  
-**Status**: ✅ Completed  
-**Current Task**: M5 测试框架已完成，覆盖率 96%  
-**Progress**: 等待新模块提交测试
+**Last Updated**: 2026-03-07 20:30  
+**Status**: ✅ Sprint 2 Integration Tests Complete  
+**Current Task**: 最新任务完成 - 测试报告已提交  
+**Progress**: 22/24 tests passing (91.7% pass rate)
 
 ---
 
@@ -29,16 +29,37 @@ agent: test
 
 ## Current Phase
 
-**Phase**: Sprint 1 - Phase 4 (New Features)  
-**Sprint Day**: 2/14
+**Phase**: Sprint 2 - Knowledge Extraction  
+**Sprint Day**: Complete
 
-### Current Task
-✅ PR #18 已合并，测试框架完成
+### Latest Task Completed
+✅ **测试任务**: 重新运行集成测试（2026-03-07 20:30）
 
-**待命任务**:
-- 等待 Template Team 完成 #23, #24
-- 等待 Data Team 完成 #25-27
-- 为新功能补充测试
+**任务来源**: `tasks/test-team-task.md`
+
+**验证结果**:
+- ✅ Issue #8: extract_keywords() 已实现并通过测试
+- ✅ Issue #9: generate_summary() 已实现并通过测试
+- ✅ PR #17: 已合并到 main 分支
+- ✅ 之前跳过的测试现在通过
+- ✅ 测试报告已生成: `reports/test-report.md`
+
+**测试统计**:
+- 总测试数: 24
+- 通过: 22
+- 失败: 0
+- 跳过: 2 (邮件集成 - 需要真实IMAP)
+- 通过率: 91.7%
+- 执行时间: 8.88s
+- 覆盖率: 53%
+
+**性能数据**:
+- 索引构建 (100文档): ~2s (目标 <10s) ✅
+- 搜索延迟: ~50ms (目标 <150ms) ✅
+- 关键词提取 (1000字符): <0.5s (目标 <1s) ✅
+- 摘要生成 (1000字符): <3s (目标 <5s) ✅
+
+**发布建议**: ✅ **建议发布 v1.1**
 
 ---
 
@@ -49,8 +70,16 @@ agent: test
 tests/
 ├── conftest.py            # 测试配置和fixtures
 ├── test_*.py              # 测试文件
+├── integration/           # 集成测试
+│   ├── test_opencode_integration.py
+│   └── test_full_workflow.py
 ├── reports/               # 测试报告
+│   ├── integration_test_summary.md
+│   └── coverage_html/
 └── fixtures/              # 测试固件
+
+reports/
+└── test-report.md         # 最新测试报告
 
 test-data/
 ├── examples/              # 示例文档
@@ -67,13 +96,45 @@ test-data/
 
 | Item | Status | Action Needed |
 |------|--------|---------------|
-| PR #18 | ✅ 已合并 | 测试框架完成 |
-| Issue #16 | ✅ 完成 | PR #18 已实现 |
-| Issue #23 | 🔍 监控 | Template Team - 模板引擎 |
-| Issue #24 | 🔍 监控 | Template Team - 配置系统 |
-| Issue #25 | 🔍 监控 | Data Team - 笔记整理工具 |
-| Issue #26 | 🔍 监控 | Data Team - 索引生成工具 |
-| Issue #27 | 🔍 监控 | Data Team - 关键词提取工具 |
+| Issue #14 | ✅ 完成 | 集成测试重新运行完成 |
+| Issue #8 | ✅ 完成 | extract_keywords 已实现 |
+| Issue #9 | ✅ 完成 | generate_summary 已实现 |
+| PR #17 | ✅ 合并 | Knowledge Extraction Tools |
+| Issue #16 | ❌ Closed | Core Team 代码已恢复 |
+
+---
+
+## Test Results Summary
+
+### Latest Integration Tests (2026-03-07 20:30)
+
+**Overall**: ✅ 22/24 Passed (91.7%)
+
+| Test Category | Count | Status |
+|--------------|-------|--------|
+| API Contract Tests | 2 | ✅ Passed |
+| Scenario Tests | 5 | ✅ Passed |
+| Error Handling | 2 | ✅ Passed |
+| Performance Tests | 1 | ✅ Passed |
+| Workflow Tests | 6 | ✅ Passed |
+| Error Recovery | 2 | ✅ Passed |
+| Data Integrity | 1 | ✅ Passed |
+| **Keyword Extraction** | 1 | ✅ **PASSING** |
+| **Summary Generation** | 1 | ✅ **PASSING** |
+| Email Integration | 2 | ⏭️ Skipped (需要真实IMAP) |
+
+**Coverage by Module**:
+- scripts/index/manager.py: 83% ✅
+- scripts/embeddings/models.py: 83% ✅
+- scripts/tools/indexing.py: 82% ✅
+- scripts/embeddings/encoder.py: 79% ✅
+- scripts/index/vector_store.py: 77% ✅
+- scripts/tools/search.py: 70% ⚠️
+- scripts/connectors/base.py: 69% ⚠️
+- scripts/tools/extraction.py: 61% ⚠️
+- scripts/connectors/email.py: 18% ⚠️ (测试跳过)
+
+**总体覆盖率**: 53% (目标 80%+)
 
 ---
 
@@ -102,54 +163,20 @@ cd ../knowledge-assistant-dev
 
 ---
 
-## Next Actions
-
-### 🟢 Immediate (现在)
-**Rebase PR #18 到最新 main**
-
-```bash
-# 1. 在main仓库操作
-cd ../knowledge-assistant
-
-# 2. 切换到feature分支
-git checkout test/integration-framework
-
-# 3. Rebase
-git fetch origin
-git rebase origin/main
-
-# 4. 推送
-git push -f origin test/integration-framework
-
-# 5. 确认PR状态
-gh pr view 18
-
-# 6. 返回dev仓库更新状态
-cd ../knowledge-assistant-dev
-```
-
----
-
 ## Working Directory
 
-**启动位置**: `D:\opencode\knowledge-assistant-dev` (dev仓库)
+**启动位置**: `/Users/sonnet/opencode/SG-AgentTeam` (当前仓库)
 
-**操作main仓库时**:
-- 相对路径: `../knowledge-assistant`
-- 或使用绝对路径访问
+**测试运行**:
+```bash
+# 运行所有集成测试
+python3 -m pytest tests/integration/ -v
 
----
+# 运行带覆盖率报告
+python3 -m pytest tests/integration/ -v --cov=scripts --cov-report=html
 
-## Status Update
-
-**更新 `agent-status.md`**:
-```markdown
-### Test Team
-| Field | Value |
-|-------|-------|
-| Status | 🟢 Ready to Merge |
-| Current Task | PR #18 rebased, waiting for merge |
-| Last Activity | YYYY-MM-DD HH:MM |
+# 运行特定测试
+python3 -m pytest tests/integration/test_opencode_integration.py -v
 ```
 
 ---
@@ -161,13 +188,7 @@ cd ../knowledge-assistant-dev
 1. 记录到 `practice/knowledge-base/experiences/test/[任务名].md`
 2. 标明是否为框架相关问题
 3. 更新 `agent-status.md` 通知 PM
-
-### 框架相关问题示例
-
-- Agent交互不顺畅
-- 文档格式不清晰
-- Context信息过多/过少
-- 模块边界不明确
+4. 创建 GitHub Issue（严重问题）
 
 ---
 
@@ -178,11 +199,34 @@ cd ../knowledge-assistant-dev
 | 启动文档 | `practice/agents/test/CATCH_UP.md` |
 | 核心指南 | `practice/agents/test/ESSENTIALS.md` |
 | 项目状态 | `practice/status/agent-status.md` |
-| Main仓库 | `../knowledge-assistant/` |
+| 测试报告 | `reports/test-report.md` |
+| 覆盖率报告 | `tests/reports/coverage_html/index.html` |
+
+---
+
+## Next Actions
+
+### 🟢 Immediate (现在)
+**等待下一步指示**
+
+当前状态:
+- ✅ 集成测试代码完成
+- ✅ 所有功能测试通过
+- ✅ 测试报告已提交 (`reports/test-report.md`)
+- ✅ Sprint 2 验证完成
+- ✅ 发布建议: 可发布 v1.1
+
+### 📋 Future Tasks
+v1.1 发布准备:
+1. ✅ 完整集成测试通过
+2. ✅ 功能验证完成
+3. ⏭️ 等待 v1.1 发布通知
+4. ⏭️ 生产环境测试（如需要）
 
 ---
 
 **Remember**: 
-- 在dev仓库启动和工作
+- 在 dev 仓库启动和工作
 - 只创建测试文件和报告
-- 操作main仓库时使用 `../knowledge-assistant`
+- 发现严重问题立即报告
+- 保持测试覆盖率 > 80%

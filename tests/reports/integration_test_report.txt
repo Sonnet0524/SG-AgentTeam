@@ -1,0 +1,68 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0 -- /Applications/Xcode.app/Contents/Developer/usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/sonnet/opencode/SG-AgentTeam
+plugins: cov-7.0.0
+collecting ... collected 24 items
+
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_complete_knowledge_base PASSED [  4%]
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_incremental_updates PASSED [  8%]
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_multilingual_search PASSED [ 12%]
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_performance_monitoring PASSED [ 16%]
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_search_suggestions PASSED [ 20%]
+tests/integration/test_full_workflow.py::TestFullWorkflows::test_workflow_metadata_enrichment PASSED [ 25%]
+tests/integration/test_full_workflow.py::TestWorkflowWithMissingFeatures::test_workflow_with_keyword_extraction SKIPPED [ 29%]
+tests/integration/test_full_workflow.py::TestWorkflowWithMissingFeatures::test_workflow_with_summaries SKIPPED [ 33%]
+tests/integration/test_full_workflow.py::TestWorkflowWithMissingFeatures::test_workflow_email_integration SKIPPED [ 37%]
+tests/integration/test_full_workflow.py::TestErrorRecoveryWorkflows::test_workflow_handle_corrupted_index PASSED [ 41%]
+tests/integration/test_full_workflow.py::TestErrorRecoveryWorkflows::test_workflow_handle_large_queries PASSED [ 45%]
+tests/integration/test_full_workflow.py::TestDataIntegrity::test_metadata_preservation PASSED [ 50%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_api_contract_build_index PASSED [ 54%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_api_contract_search PASSED [ 58%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_scenario_build_knowledge_base PASSED [ 62%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_scenario_semantic_search PASSED [ 66%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_scenario_filtered_search PASSED [ 70%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_scenario_batch_queries PASSED [ 75%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_scenario_mixed_sources PASSED [ 79%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_error_handling_invalid_documents PASSED [ 83%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_error_handling_missing_index PASSED [ 87%]
+tests/integration/test_opencode_integration.py::TestOpenCodeIntegration::test_performance_requirements PASSED [ 91%]
+tests/integration/test_opencode_integration.py::TestIndexStats::test_get_index_stats PASSED [ 95%]
+tests/integration/test_opencode_integration.py::TestIntegrationWithConnectors::test_email_connector_integration SKIPPED [100%]
+
+=============================== warnings summary ===============================
+../../Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35
+  /Users/sonnet/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+    warnings.warn(
+
+<frozen importlib._bootstrap>:228
+  <frozen importlib._bootstrap>:228: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:228
+  <frozen importlib._bootstrap>:228: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:228
+  <frozen importlib._bootstrap>:228: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.9.6-final-0 ________________
+
+Name                             Stmts   Miss  Cover   Missing
+--------------------------------------------------------------
+scripts/connectors/__init__.py       3      0   100%
+scripts/connectors/base.py          58     18    69%   79-81, 106, 125, 139, 171, 189, 198, 202-203, 207, 211-212, 216-217, 221-222
+scripts/connectors/email.py        348    285    18%   130-135, 147-189, 198-218, 227-236, 248-265, 300-352, 369-411, 428-498, 510-539, 543-546, 550-564, 568, 600-686, 695-716, 733-761
+scripts/embeddings/__init__.py       3      0   100%
+scripts/embeddings/encoder.py       71     15    79%   84, 101-117, 143, 229
+scripts/embeddings/models.py        23      4    83%   58, 75-76, 86
+scripts/index/__init__.py            3      0   100%
+scripts/index/manager.py            66     11    83%   106-107, 145-146, 162, 197, 221-225
+scripts/index/vector_store.py       95     22    77%   95, 99, 111, 117, 147, 155, 175, 187-189, 203, 240-242, 262-263, 291-299
+scripts/tools/__init__.py            3      0   100%
+scripts/tools/indexing.py           49      9    82%   117, 119, 157-158, 191-193, 221, 231
+scripts/tools/search.py             66     20    70%   121-122, 151, 162-164, 195, 201-202, 252-272
+--------------------------------------------------------------
+TOTAL                              788    384    51%
+Coverage HTML written to dir tests/reports/coverage_html
+================== 20 passed, 4 skipped, 4 warnings in 8.42s ===================

@@ -5,6 +5,12 @@
       "description": "PM - 项目管理和协调",
       "mode": "primary",
       "prompt": "{file:./practice/agents/pm/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "review-process",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -17,6 +23,11 @@
       "description": "Core - 核心数据处理和工具开发",
       "mode": "primary",
       "prompt": "{file:./practice/agents/core/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -32,6 +43,11 @@
       "description": "AI - 向量嵌入和语义搜索",
       "mode": "primary",
       "prompt": "{file:./practice/agents/ai/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -47,6 +63,11 @@
       "description": "Integration - opencode集成和连接器开发",
       "mode": "primary",
       "prompt": "{file:./practice/agents/integration/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "ask",
         "bash": {
@@ -62,6 +83,11 @@
       "description": "Test - 测试框架和质量保证",
       "mode": "primary",
       "prompt": "{file:./practice/agents/test/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "deny",
         "bash": {
@@ -75,6 +101,11 @@
       "description": "Research - 框架层面的研究专家，辅助用户形成Agent Team框架设计思路",
       "mode": "primary",
       "prompt": "{file:./agents/research/CATCH_UP.md}",
+      "skills": [
+        "git-workflow",
+        "quality-gate"
+      ],
+      "memory_index": "framework/memory-index.yaml",
       "permission": {
         "edit": "ask",
         "bash": {

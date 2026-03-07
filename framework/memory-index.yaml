@@ -1,0 +1,148 @@
+# Agent Team Memory Index
+# 记忆索引：定义Agent记忆的加载优先级和路径
+
+version: "1.0"
+last_updated: "2026-03-07"
+
+# 加载优先级定义
+priority_levels:
+  P0: "必须加载 - 身份记忆"
+  P1: "推荐加载 - 状态记忆"
+  P2: "可选加载 - 会话记忆"
+  P3: "按需加载 - 经验记忆"
+
+# Agent记忆索引
+agents:
+  pm:
+    identity:
+      path: "practice/agents/pm/AGENTS.md"
+      priority: P0
+      estimated_tokens: 5000
+      description: "PM Agent身份定义"
+    
+    state:
+      path: "practice/agents/pm/CATCH_UP.md"
+      priority: P1
+      estimated_tokens: 3000
+      description: "PM Agent当前状态"
+    
+    session:
+      path: "practice/agents/pm/session-log.md"
+      priority: P2
+      estimated_tokens: 2000
+      description: "PM Agent会话记录"
+    
+    experiences:
+      path: "practice/agents/pm/experiences/"
+      priority: P3
+      load_mode: "on-demand"
+      description: "PM Agent经验积累"
+  
+  ai:
+    identity:
+      path: "practice/agents/ai/AGENTS.md"
+      priority: P0
+      estimated_tokens: 5000
+      description: "AI Team身份定义"
+    
+    state:
+      path: "practice/agents/ai/CATCH_UP.md"
+      priority: P1
+      estimated_tokens: 2000
+      description: "AI Team当前状态"
+    
+    experiences:
+      path: "practice/agents/ai/experiences/"
+      priority: P3
+      load_mode: "on-demand"
+      description: "AI Team经验积累"
+  
+  core:
+    identity:
+      path: "practice/agents/core/AGENTS.md"
+      priority: P0
+      estimated_tokens: 5000
+      description: "Core Team身份定义"
+    
+    state:
+      path: "practice/agents/core/CATCH_UP.md"
+      priority: P1
+      estimated_tokens: 2000
+      description: "Core Team当前状态"
+    
+    experiences:
+      path: "practice/agents/core/experiences/"
+      priority: P3
+      load_mode: "on-demand"
+      description: "Core Team经验积累"
+  
+  integration:
+    identity:
+      path: "practice/agents/integration/AGENTS.md"
+      priority: P0
+      estimated_tokens: 5000
+      description: "Integration Team身份定义"
+    
+    state:
+      path: "practice/agents/integration/CATCH_UP.md"
+      priority: P1
+      estimated_tokens: 2000
+      description: "Integration Team当前状态"
+    
+    experiences:
+      path: "practice/agents/integration/experiences/"
+      priority: P3
+      load_mode: "on-demand"
+      description: "Integration Team经验积累"
+  
+  test:
+    identity:
+      path: "practice/agents/test/AGENTS.md"
+      priority: P0
+      estimated_tokens: 5000
+      description: "Test Team身份定义"
+    
+    state:
+      path: "practice/agents/test/CATCH_UP.md"
+      priority: P1
+      estimated_tokens: 2000
+      description: "Test Team当前状态"
+    
+    experiences:
+      path: "practice/agents/test/experiences/"
+      priority: P3
+      load_mode: "on-demand"
+      description: "Test Team经验积累"
+
+# Skills索引
+skills:
+  git-workflow:
+    path: "framework/skills/workflow/git-workflow.md"
+    priority: P1
+    description: "Git工作流程"
+  
+  review-process:
+    path: "framework/skills/workflow/review-process.md"
+    priority: P1
+    description: "代码审查流程"
+  
+  quality-gate:
+    path: "framework/skills/decision-support/quality-gate.md"
+    priority: P1
+    description: "质量门控"
+
+# 记忆压缩规则（未来实现）
+compression_rules:
+  - name: "session-to-state"
+    trigger: "session-end"
+    action: "summarize"
+    source: "session-log.md"
+    target: "CATCH_UP.md"
+    description: "会话结束时，将会话记忆摘要到状态记忆"
+  
+  - name: "state-to-experience"
+    trigger: "project-milestone"
+    action: "extract-lessons"
+    source: "CATCH_UP.md"
+    target: "experiences/"
+    description: "项目里程碑时，从状态记忆提取经验"
