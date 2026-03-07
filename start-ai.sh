@@ -39,3 +39,6 @@ echo
 echo "Tasks: Check GitHub Issues with label 'team: ai'"
 echo
 read -p "Press Enter to continue..."
+
+# Start OpenCode with AI Team
+opencode --agent ai

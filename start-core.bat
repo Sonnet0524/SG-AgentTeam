@@ -40,3 +40,6 @@ echo.
 echo Tasks: Check GitHub Issues with label 'team: core'
 echo.
 pause
+
+REM Start OpenCode with Core Team
+opencode --agent core

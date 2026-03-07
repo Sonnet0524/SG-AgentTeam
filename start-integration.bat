@@ -37,3 +37,6 @@ echo.
 echo Tasks: Check GitHub Issues with label 'team: integration'
 echo.
 pause
+
+REM Start OpenCode with Integration Team
+opencode --agent integration

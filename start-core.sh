@@ -39,3 +39,6 @@ echo
 echo "Tasks: Check GitHub Issues with label 'team: core'"
 echo
 read -p "Press Enter to continue..."
+
+# Start OpenCode with Core Team
+opencode --agent core

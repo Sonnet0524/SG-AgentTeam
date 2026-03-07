@@ -41,3 +41,6 @@ echo.
 echo Tasks: Check GitHub Issues with label 'team: ai'
 echo.
 pause
+
+REM Start OpenCode with AI Team
+opencode --agent ai
