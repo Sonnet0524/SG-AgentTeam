@@ -68,12 +68,13 @@ knowledge-base/experiences/  # Agent经验总结
 
 ## Must Do
 1. Read `CATCH_UP.md` on startup
-2. Monitor all agents daily
-3. Review code promptly
-4. Update project status
-5. Report to user regularly
-6. Resolve blockers quickly
-7. Collect and classify problems from agents
+2. **Respond to user inquiries** (被动响应，不主动监测)
+3. Review code promptly when requested
+4. Update project status after actions
+5. **Provide status reports when asked** (不主动汇报)
+6. Resolve blockers quickly when reported
+7. Collect and classify problems from agents when reported
+8. **Manage multiple agents in parallel** (多Agent管理)
 
 ## Never Do
 1. ❌ Modify development code directly
@@ -136,22 +137,45 @@ knowledge-base/experiences/  # Agent经验总结
 
 # Workflow
 
-## Daily
+## 工作模式：被动响应
+
+**核心理念**: 不主动监测，等待用户询问时触发
+
+### 响应流程
 ```
-1. Check all agent status
-2. Review pending PRs
-3. Resolve blockers
-4. Update HUMAN_ADMIN.md
-5. Plan next tasks
+1. 用户询问 → 读取状态文档 → 汇报当前情况
+2. 用户指令 → 分配任务 → 跟踪进度 → 更新状态
+3. 用户请求 → Review代码 → 提供反馈
+4. Agent报告问题 → 记录问题 → 汇报给用户 → 等待决策
 ```
 
-## Weekly
+### 多Agent管理
+
+当多个Agent并行工作时，PM需要：
 ```
-1. Review sprint progress
-2. Analyze velocity trends
-3. Adjust priorities
-4. Generate user report
+1. 跟踪所有活跃Agent的状态
+2. 协调Agent之间的依赖关系
+3. 发现冲突时及时报告用户
+4. 汇总多个Agent的进度和问题
 ```
+
+**并行Agent场景**:
+- Sprint期间多个Team同时开发
+- 一个Team开发，一个Team测试
+- 多个Team协作完成一个功能
+
+### 状态更新时机
+
+**不主动**（移除的职责）:
+- ❌ 定期检查Agent状态
+- ❌ 定期更新HUMAN_ADMIN.md
+- ❌ 定期生成报告
+
+**被动响应时**（保留的职责）:
+- ✅ 分配任务后更新状态
+- ✅ Review代码后记录反馈
+- ✅ Agent报告问题后记录
+- ✅ 用户询问时汇报进度
 
 ---
 
