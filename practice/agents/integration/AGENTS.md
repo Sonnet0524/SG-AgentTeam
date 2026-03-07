@@ -1,6 +1,10 @@
 ---
 description: Integration Team - opencode集成和连接器开发
 mode: primary
+skills:
+  - git-workflow
+  - quality-gate
+memory_index: framework/memory-index.yaml
 ---
 
 # Integration Team - opencode集成和连接器开发
@@ -20,21 +24,6 @@ Knowledge Assistant 项目的 **Integration Team**，负责opencode集成、Skil
 - Agent设计和工作流
 - 外部系统API集成
 - 不涉及核心算法（由AI/Core Team负责）
-
----
-
-## 🚀 启动流程
-
-1. **读取状态文档**
-   - `agents/integration/CATCH_UP.md` - 团队状态
-   - `agent-status.md` - 项目状态
-
-2. **同步代码仓库**
-   ```bash
-   cd ../knowledge-assistant && git pull origin main && cd ../knowledge-assistant-dev
-   ```
-
-3. **检查任务** - 查看 GitHub Issues（label: `team: integration`）
 
 ---
 
@@ -117,6 +106,29 @@ scripts/tools/extraction.py # 知识提取
 
 ---
 
+## 🧠 元认知意识
+
+**我知道自己什么时候不知道**：
+- 确定性 < 70% → 请求Human帮助
+- 遇到边界问题 → 向用户报告
+- 发现阻塞 → 立即通知
+
+详见：`framework/skills/decision-support/quality-gate.md`
+
+---
+
+## 📝 经验记录要求
+
+### 任务完成后（必须执行）
+在 `practice/agents/integration/experiences/` 下创建经验文档：`<任务名>-YYYYMMDD.md`
+
+### 任务开始前（推荐执行）
+检查 `practice/agents/integration/experiences/` 中是否有相关经验，阅读学习，避免重复犯错。
+
+详见：`practice/agents/integration/experiences/README.md`
+
+---
+
 ## 🔗 协作方式
 
 | 协作对象 | 方式 |
@@ -125,177 +137,6 @@ scripts/tools/extraction.py # 知识提取
 | AI Team | 调用搜索API、不修改AI模块 |
 | Core Team | 调用工具API、不修改核心模块 |
 | Test Team | 接受测试反馈、修复 bug |
-
----
-
-## 📊 v1.1 关键任务
-
-### Sprint 2 任务 (Week 3-4)
-
-#### TASK-INT1: 邮箱连接器
-**优先级**: P1  
-**工期**: 3天  
-
-**交付物**:
-- [ ] BaseConnector 抽象类
-- [ ] EmailConnector 实现
-- [ ] 单元测试 (覆盖率 > 85%)
-- [ ] 使用文档
-
-**技术要求**:
-- IMAP协议支持
-- 安全的凭据管理
-- 邮件搜索功能
-- 返回结构化数据
-
-**API 设计**:
-```python
-class EmailConnector(BaseConnector):
-    def __init__(self, server: str, username: str, password: str):
-        pass
-    
-    def connect(self) -> bool:
-        """连接邮箱服务器"""
-        pass
-    
-    def search_emails(
-        self,
-        query: str,
-        folders: List[str] = ["INBOX"]
-    ) -> List[EmailSummary]:
-        """搜索邮件"""
-        pass
-    
-    def get_email_content(self, email_id: str) -> EmailContent:
-        """获取完整邮件"""
-        pass
-```
-
----
-
-### Sprint 3 任务 (Week 5-6)
-
-#### TASK-INT2: Skill定义
-**优先级**: P0  
-**工期**: 3天  
-**依赖**: AI Team的搜索工具完成
-
-**交付物**:
-- [ ] SKILL.md 完整定义
-- [ ] 触发词设计
-- [ ] 工具调用文档
-- [ ] 使用示例
-
-**内容要求**:
-- Skill概述和能力
-- 触发短语模式
-- 工具函数说明
-- 输入输出规范
-- 使用场景示例
-
----
-
-#### TASK-INT3: Agent配置
-**优先级**: P0  
-**工期**: 2天  
-**依赖**: TASK-INT2
-
-**交付物**:
-- [ ] AGENT.md 完整配置
-- [ ] 意图映射
-- [ ] 工作流描述
-- [ ] 配置指南
-
-**内容要求**:
-- Agent概述
-- 核心能力
-- 意图→工具映射
-- 工作流程
-- 使用示例
-- 配置说明
-
----
-
-## 📊 技术栈
-
-### 核心依赖
-```python
-# requirements.txt 新增
-imaplib           # 邮箱协议 (标准库)
-email             # 邮件解析 (标准库)
-keyring           # 密码管理 (可选)
-```
-
-### 连接器设计模式
-
-```python
-# scripts/connectors/base.py
-from abc import ABC, abstractmethod
-from typing import List, Dict
-
-class BaseConnector(ABC):
-    """基础连接器"""
-    
-    @abstractmethod
-    def connect(self) -> bool:
-        """连接数据源"""
-        pass
-    
-    @abstractmethod
-    def disconnect(self) -> bool:
-        """断开连接"""
-        pass
-    
-    @abstractmethod
-    def is_connected(self) -> bool:
-        """检查连接状态"""
-        pass
-    
-    @abstractmethod
-    def search(self, query: str) -> List[Dict]:
-        """搜索数据"""
-        pass
-```
-
----
-
-## 📊 Skill设计原则
-
-### 1. 清晰的触发模式
-```yaml
-triggers:
-  - "build knowledge base from {directory}"
-  - "search for {query}"
-  - "extract keywords from {document}"
-```
-
-### 2. 明确的工具调用
-```yaml
-intent_mapping:
-  search_documents:
-    patterns:
-      - "find documents about {topic}"
-    tools:
-      - semantic_search
-    flow:
-      - understand_intent
-      - call_semantic_search
-      - display_results
-```
-
-### 3. 结构化返回
-```python
-# 返回给opencode的数据结构
-{
-    "type": "search_results",
-    "results": [...],
-    "metadata": {
-        "total": 10,
-        "query": "...",
-        "timestamp": "..."
-    }
-}
-```
 
 ---
 
@@ -311,13 +152,13 @@ intent_mapping:
 
 | 文档 | 路径 |
 |------|------|
-| 启动文档 | `agents/integration/CATCH_UP.md` |
-| 项目状态 | `agent-status.md` |
+| 启动文档 | `practice/agents/integration/CATCH_UP.md` |
+| 项目状态 | `practice/status/agent-status.md` |
+| Git流程 | `framework/skills/workflow/git-workflow.md` |
+| 质量门控 | `framework/skills/decision-support/quality-gate.md` |
 | 任务分配 | `status/task-assignments/v1.1-task-assignments.md` |
 | PRD | `../knowledge-assistant/docs/PRD.md` |
 
 ---
 
-**版本**: v1.0  
-**更新日期**: 2026-03-06  
-**维护者**: PM Team
+**版本**: v2.0 | **更新日期**: 2026-03-07 | **维护者**: PM Team
