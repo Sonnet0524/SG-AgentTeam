@@ -6,56 +6,228 @@
 
 ## Quick Status
 
-**Last Updated**: 2026-03-08 (v1.1 Released 🎉)  
-**Current Phase**: v1.1 Released ✅  
-**Status**: 🟢 Complete - v1.1.0 已发布  
-**Version**: v1.1.0
+**Last Updated**: 2026-03-08 (v1.2.0 Released 🎉)  
+**Current Phase**: v1.2 Complete - Ready for v1.3  
+**Status**: 🟢 Idle - 无正在进行的任务  
+**Version**: v1.2.0
 
 ---
 
 ## Current Focus
 
-**Primary Task**: v1.1 发布完成 ✅
+**Primary Task**: 无 - v1.2.0 已发布，等待用户指示
 
-**Completed Actions**:
-1. ✅ Sprint 1完成（AI Team + Test Team）
-2. ✅ Sprint 2完成（Core Team + Integration Team）
-3. ✅ Sprint 3完成（Integration Team + Test Team）
-4. ✅ Test Team集成测试通过 (91.7%)
-5. ✅ **v1.1.0 发布完成**
-   - RELEASE_NOTES.md 已更新
-   - README.md 已更新
-   - GitHub Release 已创建
-   - Tag v1.1.0 已推送
+---
 
-**Release URL**: https://github.com/Sonnet0524/knowledge-assistant/releases/tag/v1.1.0
+## 🎉 v1.2.0 发布完成 (2026-03-08)
+
+### 发布链接
+
+**GitHub Release**: https://github.com/Sonnet0524/knowledge-assistant/releases/tag/v1.2.0
+
+### 完成的功能
+
+| 功能 | Team | 测试 |
+|------|------|------|
+| 性能优化 (10x scale) | AI Team | ✅ |
+| Connector Framework | Core Team | ✅ 134 tests |
+| Calendar Connector | Core Team | ✅ 31 tests |
+| Notes Connector | Core Team | ✅ 30 tests |
+| Abstractive Summarization | Core Team | ✅ 50 tests |
+| Multi-language Support | Core Team | ✅ 33 tests |
+| Web UI API | Integration Team | ✅ 4 tests |
+| Web UI | Integration Team | ✅ |
+
+### 质量指标
+
+| 指标 | 数值 | 目标 |
+|------|------|------|
+| 测试通过 | 269/269 (100%) | ✅ |
+| 代码覆盖率 | 91% | ✅ |
+| 搜索延迟 | ~85ms | ✅ |
+| 内存使用 | ~350MB | ✅ |
+
+### Issues 状态
+
+**全部关闭**: 16/16 Issues (#37-#52)
+
+---
+
+## 下一步建议
+
+### v1.3 规划方向
+
+1. **更多连接器**: Slack, GitHub, Jira
+2. **高级 NLP**: 实体提取、关系抽取
+3. **知识图谱可视化**: Web UI 增强
+4. **插件系统**: 可扩展架构
+
+### 待处理
+
+- [ ] 总结 v1.2 开发经验
+- [ ] 清理 reports/ 目录
+- [ ] 规划 v1.3 任务
 
 ---
 
 ## 今日工作总结 (2026-03-08)
 
-### 主要成果 - v1.1.0 发布 ✅
+### 完成的工作
 
-#### 1. 发布准备完成 ✅
-- 更新 RELEASE_NOTES.md
-- 更新 README.md
-- 合并 PR #36 (extraction tools)
-- 创建并推送 v1.1.0 tag
-- 创建 GitHub Release
+1. ✅ v1.1.0 发布完成
+   - 语义搜索、关键词提取、摘要生成
+   - GitHub Release v1.1.0
 
-#### 2. v1.1 功能清单 ✅
-| 功能 | Team | 状态 |
-|------|------|------|
-| 语义索引构建 | AI Team | ✅ |
-| 语义搜索 | AI Team | ✅ |
-| 关键词提取 | Core Team | ✅ |
-| 摘要生成 | Core Team | ✅ |
-| 邮件连接器 | Integration Team | ✅ |
-| opencode集成 | Integration Team | ✅ |
+2. ✅ v1.2 开发完成
+   - 并行启动 3 个 Agent
+   - Core Team: Connector Framework, Calendar, Notes, Abstractive Summary, Multi-language
+   - AI Team: Performance Optimization
+   - Integration Team: Web UI API, Web UI
+
+3. ✅ 测试通过
+   - 269/269 tests passed
+   - 91% code coverage
+
+4. ✅ v1.2.0 发布
+   - RELEASE_NOTES.md 更新
+   - README.md 更新
+   - GitHub Release 创建
+   - Tag v1.2.0 推送
+
+5. ✅ 经验文档
+   - 创建 parallel-agent-launch-20260308.md
+   - 记录并行启动 Agent 的方法
 
 ---
 
-## 历史工作总结 (2026-03-07)
+## 📁 关键文件位置
+
+### 状态文档
+- `practice/status/agent-status.md` - Team 状态
+- `practice/status/human-admin.md` - 用户总览
+
+### 任务文件
+- `tasks/` - 任务分配文件
+- `reports/` - 完成报告
+- `archive/v1.1/` - v1.1 归档
+
+### 经验文档
+- `practice/agents/pm/experiences/` - PM Team 经验
+
+### 工作流程
+- `practice/agents/pm/WORKFLOW.md` - Agent 管理流程
+- `practice/agents/pm/ESSENTIALS.md` - 核心指南
+
+---
+
+## Team Status
+
+| Team | Status | Location | Last Task |
+|------|--------|----------|-----------|
+| PM Team | 🟢 Idle | agents/pm/ | v1.2 发布完成 |
+| Core Team | ✅ Complete | agents/core/ | Sprint 2 完成 |
+| AI Team | ✅ Complete | agents/ai/ | Sprint 1 完成 |
+| Integration Team | ✅ Complete | agents/integration/ | Sprint 3 完成 |
+| Test Team | ✅ Complete | agents/test/ | 集成测试完成 |
+
+---
+
+## 多仓库操作指南
+
+### 启动位置
+```
+始终在 dev 仓库启动和工作
+```
+
+### 操作 main 仓库
+```bash
+# 方法1: 相对路径
+cd ../knowledge-assistant
+
+# 方法2: workdir 参数
+<command> --workdir=../knowledge-assistant
+```
+
+### 同步仓库
+```bash
+# 同步 dev 仓库
+git pull origin main
+
+# 同步 main 仓库
+cd ../knowledge-assistant && git pull origin main
+```
+
+---
+
+## Agent 启动方式
+
+### 核心命令
+```bash
+opencode run --agent <name> "任务描述" > logs/<team>.log 2>&1 &
+```
+
+### 任务文件方式（推荐）
+```bash
+# 1. 创建任务文件
+cat > tasks/<team>-task.md << 'EOF'
+# 任务标题
+## 任务背景
+...
+## 输出要求
+完成后写入 reports/<team>-report.md
+EOF
+
+# 2. 启动 Agent
+opencode run --agent <name> "请读取 tasks/<team>-task.md 并完成，结果写入 reports/<team>-report.md" > logs/<team>.log 2>&1 &
+```
+
+### 权限配置要求
+```json
+{
+  "permission": {
+    "edit": "allow"  // 非交互模式必须为 allow
+  }
+}
+```
+
+详见: `practice/agents/pm/experiences/parallel-agent-launch-20260308.md`
+
+---
+
+## Quick Reference
+
+| 文档 | 路径 |
+|------|------|
+| 启动文档 | `practice/agents/pm/CATCH_UP.md` (本文件) |
+| 核心指南 | `practice/agents/pm/ESSENTIALS.md` |
+| 工作流程 | `practice/agents/pm/WORKFLOW.md` |
+| 团队状态 | `practice/status/agent-status.md` |
+| 用户总览 | `practice/status/human-admin.md` |
+| 经验文档 | `practice/agents/pm/experiences/` |
+
+---
+
+## Important Notes
+
+### 工作模式
+- ✅ **主动启动Agent** - 分配任务后立即启动
+- ❌ **不轮询状态** - 不主动检查Agent进度
+- ✅ **被动接收报告** - Agent完成后读取报告
+- ❌ **禁止使用task工具启动Team Agent** - task只能启动general/explore
+
+### 仓库操作
+- 在 dev 仓库启动和工作
+- 操作 main 仓库时使用 `../knowledge-assistant` 或 `workdir` 参数
+
+### Research Agent
+- 外部Agent，不受PM Team管控
+- 保持知识分享
+
+---
+
+**Last Updated**: 2026-03-08 23:35  
+**Next Work**: 等待用户指示 (v1.3规划 / 经验总结 / 其他)  
+**Status**: 🟢 Ready for next task
 - 执行时间: 8.88s
 
 **Sprint 2验证**:
