@@ -473,3 +473,159 @@ git commit -m "Add L3 layer positioning and multi-repo collaboration framework"
 **当前进度**: 50% (5/10 阶段完成)  
 **下一阶段**: Phase 6 - 建立Submodule依赖
 
+
+---
+
+## Phase 6: 建立Submodule依赖关系
+
+### 6.1 在L1添加L0作为Submodule
+**时间**: 2026-03-08 16:50
+
+**目的**: 让L1能够访问L0的方法论和实例存储
+
+
+**操作详情**:
+```bash
+cd /Users/sonnet/opencode/agent-team-research
+mkdir -p .agent-team
+ln -s ../../SEARCH-R .agent-team/search-r
+```
+
+**注意**: 由于Git安全限制，无法使用本地文件路径的Submodule。
+改用符号链接（Symbolic Link）作为临时方案。
+
+**优势**:
+- 即时访问L0资源
+- 无需Git配置
+- 简单直接
+
+**限制**:
+- Windows系统需要管理员权限或开发者模式
+- 无法跟踪L0的具体版本
+- 不是标准的Git依赖管理
+
+**未来改进**: 推送到GitHub后使用正规Submodule
+
+**结果**: ✅ L0链接创建成功
+
+### 6.2 在L2添加L0和L1链接
+**时间**: 2026-03-08 17:00
+
+
+**操作详情**:
+```bash
+# L1 -> L0
+cd /Users/sonnet/opencode/agent-team-research
+ln -s ../../SEARCH-R .agent-team/search-r
+
+# L2 -> L0 and L1
+cd /Users/sonnet/opencode/AgentTeam-Template
+ln -s ../../SEARCH-R .agent-team/search-r
+ln -s ../../agent-team-research .agent-team/research
+
+# L3 -> L2
+cd /Users/sonnet/opencode/knowledge-assistant-dev
+ln -s ../../AgentTeam-Template .agent-team/template
+```
+
+**重要修复**: L3链接最初使用 `../AgentTeam-Template` 导致损坏，
+修复为 `../../AgentTeam-Template`（符号链接的相对路径基于链接文件自身位置）
+
+**结果**: ✅ 所有链接创建并验证成功
+
+### 6.3 提交链接配置
+**时间**: 2026-03-08 17:15
+
+
+**提交详情**:
+- L1: 提交哈希 `12d49e4` - "Add symbolic link to L0"
+- L2: 提交哈希 `1f692e5` - "Add symbolic links to L0 and L1"
+- L3: 提交哈希 `7ae5903` - "Add symbolic link to L2 and complete verification"
+
+**验证结果**:
+```
+L1 -> L0: ✅ 工作正常
+L2 -> L0: ✅ 工作正常
+L2 -> L1: ✅ 工作正常
+L3 -> L2: ✅ 工作正常
+L3 -> L2 -> L1: ✅ 间接访问正常
+L3 -> L2 -> L0: ✅ 间接访问正常
+```
+
+**结果**: ✅ Phase 6和Phase 9完成
+
+---
+
+## Phase 10: 生成最终报告
+
+### 10.1 任务完成总结
+**时间**: 2026-03-08 17:30
+
+
+---
+
+## Phase 7: 迁移研究内容到L1
+
+### 7.1 评估待迁移内容
+**时间**: 2026-03-08 18:00
+
+
+**评估结果**:
+
+1. **agents/research/**
+   - AGENTS.md (9.5KB) - 旧的Research Agent定义
+   - CATCH_UP.md (12.6KB) - 状态记忆
+   - ESSENTIALS.md (5KB) - 核心指南
+   - guides/ - 指南目录
+   - **总计**: ~28KB
+
+2. **docs/research/**
+   - 多个研究主题目录
+   - README.md (4.4KB)
+   - research-log.md (24.7KB) - 研究日志
+   - **总计**: ~30KB+
+
+3. **practice/knowledge-base/experiences/research/**
+   - README.md (387B)
+   - 研究经验记录
+
+**迁移策略**:
+- L1已有新的research-agent定义，符合架构要求
+- L3的旧内容作为历史参考迁移到L1
+- 在L1创建 `migration-archive/` 目录存储旧内容
+- 在L3创建迁移说明文档
+
+### 7.2 准备L1迁移目标目录
+**时间**: 2026-03-08 18:10
+
+
+**操作详情**:
+```bash
+# 创建L1迁移目录
+mkdir -p /Users/sonnet/opencode/agent-team-research/migration-archive/from-knowledge-assistant-dev
+
+# 迁移内容
+cp -r agents/research/* -> L1/migration-archive/from-knowledge-assistant-dev/agents-research/
+cp -r docs/research/* -> L1/migration-archive/from-knowledge-assistant-dev/docs-research/
+cp -r practice/knowledge-base/experiences/research/* -> L1/migration-archive/from-knowledge-assistant-dev/experiences-research/
+```
+
+**迁移统计**:
+- agents-research/: 4文件 + guides目录
+- docs-research/: 7文件 + 6个子目录
+- experiences-research/: 1文件
+- **总计**: ~58KB, 19个文件
+
+**Git提交**:
+- L1: `766f8e5` - "Migrate research content from knowledge-assistant-dev"
+- L3: 当前提交 - "Add migration notices for research content"
+
+**结果**: ✅ 迁移完成，内容可访问
+
+---
+
+## Phase 8: 准备GitHub远程仓库
+
+### 8.1 评估远程仓库需求
+**时间**: 2026-03-08 18:30
+
