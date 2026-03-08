@@ -1,0 +1,20 @@
+# 依赖配置
+
+# L0方法论依赖
+methodology:
+  repo: SEARCH-R
+  version: v1.0.0
+  type: submodule
+  path: framework/methodology/
+  check_frequency: daily
+  last_check: null
+  last_sync: null
+
+# L2模板依赖（仅L1需要）
+template:
+  repo: AgentTeam-Template
+  version: v1.0.0
+  type: reference
+  source: https://github.com/Sonnet0524/AgentTeam-Template
+  check_frequency: weekly
+  last_check: null

@@ -1,0 +1,28 @@
+# 同步状态
+
+# L0方法论同步状态
+methodology_sync:
+  status: not_checked  # not_checked, synced, outdated, missing
+  current_version: null
+  latest_version: null
+  last_check: null
+  action: check_needed  # check_needed, update_available, sync_required
+
+# L2模板同步状态（仅L1需要）
+template_sync:
+  status: not_checked
+  current_version: null
+  latest_version: null
+  last_check: null
+  action: check_needed
+
+# L3实践项目观察状态
+practice_observation:
+  knowledge_assistant_dev:
+    last_observation: null
+    status: not_observed
+    pending_feedback: false
+  wps:
+    last_observation: null
+    status: not_observed
+    pending_feedback: false

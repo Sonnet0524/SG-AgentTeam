@@ -1,0 +1,1030 @@
+[0m
+> integration · glm-5
+[0m
+[0m→ [0mRead tasks/integration-task-v1.2-sprint3.md
+[0m✱ [0mGlob "reports/**/*.md"[90m 0 matches[0m
+我来读取任务文件并完成相关工作。
+[0m✱ [0mGlob "scripts/**/*.py"[90m 13 matches[0m
+[0m✱ [0mGlob "scripts/api/**/*"[90m 0 matches[0m
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /Users/sonnet/opencode/knowledge-assistant-dev/requirements.txt
+我来检查现有项目结构并开始完成任务：
+[0m→ [0mRead scripts/tools/search.py
+[0m→ [0mRead scripts/index/manager.py
+[0m→ [0mRead scripts/connectors/email.py
+[0m✱ [0mGlob "pyproject.toml"[90m 0 matches[0m
+让我检查现有的核心模块实现，以便正确集成：
+[0m
+[0m# [0mTodos
+[ ] 创建 API 目录结构
+[ ] 创建 Pydantic 模型 (schemas.py)
+[ ] 创建搜索 API 路由 (routes/search.py)
+[ ] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+现在我理解了现有代码结构。让我创建任务清单并开始实现 FastAPI 后端 API：
+[0m$ [0mmkdir -p scripts/api/routes scripts/api/models
+现在开始创建 API 目录结构和所有必要文件：
+[0m
+[0m← [0mWrite scripts/api/__init__.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+[0m
+[0m← [0mWrite scripts/api/routes/__init__.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+[0m
+[0m← [0mWrite scripts/api/models/__init__.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py">
+ERROR [5:6] Import ".search" could not be resolved
+ERROR [6:6] Import ".documents" could not be resolved
+ERROR [7:6] Import ".connectors" could not be resolved
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[ ] 创建 Pydantic 模型 (schemas.py)
+[ ] 创建搜索 API 路由 (routes/search.py)
+[ ] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m← [0mWrite scripts/api/models/schemas.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py">
+ERROR [5:6] Import ".search" could not be resolved
+ERROR [6:6] Import ".documents" could not be resolved
+ERROR [7:6] Import ".connectors" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/__init__.py">
+ERROR [5:6] Import ".schemas" could not be resolved
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[ ] 创建搜索 API 路由 (routes/search.py)
+[ ] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m← [0mWrite scripts/api/routes/search.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py">
+ERROR [5:6] Import ".search" could not be resolved
+ERROR [6:6] Import ".documents" could not be resolved
+ERROR [7:6] Import ".connectors" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [9:6] Import "pydantic" could not be resolved
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[ ] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m← [0mWrite scripts/api/routes/documents.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py">
+ERROR [6:6] Import ".documents" could not be resolved
+ERROR [7:6] Import ".connectors" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [9:6] Import "pydantic" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py">
+ERROR [11:6] Import "fastapi" could not be resolved
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[ ] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m← [0mWrite scripts/api/routes/connectors.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py">
+ERROR [7:6] Import ".connectors" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [9:6] Import "pydantic" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py">
+ERROR [11:6] Import "fastapi" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/documents.py">
+ERROR [14:6] Import "fastapi" could not be resolved
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[x] 创建连接器状态 API 路由 (routes/connectors.py)
+[ ] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m← [0mWrite scripts/api/main.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [9:6] Import "pydantic" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py">
+ERROR [11:6] Import "fastapi" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/documents.py">
+ERROR [14:6] Import "fastapi" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py">
+ERROR [12:6] Import "fastapi" could not be resolved
+ERROR [201:39] Cannot access attribute "get_error" for class "EmailConnector"
+  Attribute "get_error" is unknown
+</diagnostics>
+[0m
+让我检查 base connector 并修复缺失的方法：
+[0m→ [0mRead scripts/connectors/base.py
+[0m
+[0m← [0mEdit scripts/api/routes/connectors.py
+Index: /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py
+===================================================================
+--- /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py
++++ /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py
+@@ -197,9 +197,9 @@
+         config=_mask_config(request.config)
+     )
+ else:
+     # Connection failed
+-    error_msg = connector.get_error() or "Connection failed"
++    error_msg = connector.get_last_error() or "Connection failed"
+     _connector_statuses['email'] = {
+         'status': 'error',
+         'last_sync': None,
+         'error': error_msg,
+
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[x] 创建连接器状态 API 路由 (routes/connectors.py)
+[x] 创建 FastAPI 主应用 (main.py)
+[ ] 测试 API 端点
+[ ] 编写集成报告
+[0m
+我需要修复 connectors.py 中的方法名错误，然后继续测试：
+[0m$ [0mpip list | grep -E "(fastapi|pydantic|uvicorn)" || echo "Dependencies not found"
+zsh:1: command not found: pip
+Dependencies not found
+[0m
+现在检查依赖并安装 FastAPI 和 uvicorn：
+[0m$ [0mwhich python3 && python3 -m pip list 2>/dev/null | grep -E "(fastapi|pydantic|uvicorn)" || echo "Checking dependencies..."
+/usr/bin/python3
+Checking dependencies...
+[0m
+[0m$ [0mpython3 -m pip install fastapi uvicorn pydantic 2>&1 | tail -20
+Requirement already satisfied: typing-extensions>=4.8.0 in /Users/sonnet/Library/Python/3.9/lib/python/site-packages (from fastapi) (4.15.0)
+Requirement already satisfied: click>=7.0 in /Users/sonnet/Library/Python/3.9/lib/python/site-packages (from uvicorn) (8.1.8)
+Collecting h11>=0.8
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Collecting annotated-types>=0.6.0
+  Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Collecting pydantic-core==2.41.5
+  Downloading pydantic_core-2.41.5-cp39-cp39-macosx_11_0_arm64.whl (1.9 MB)
+Collecting anyio<5,>=3.6.2
+  Using cached anyio-4.12.1-py3-none-any.whl (113 kB)
+Requirement already satisfied: exceptiongroup>=1.0.2 in /Users/sonnet/Library/Python/3.9/lib/python/site-packages (from anyio<5,>=3.6.2->starlette<1.0.0,>=0.40.0->fastapi) (1.3.1)
+Requirement already satisfied: idna>=2.8 in /Users/sonnet/Library/Python/3.9/lib/python/site-packages (from anyio<5,>=3.6.2->starlette<1.0.0,>=0.40.0->fastapi) (3.11)
+Installing collected packages: typing-inspection, pydantic-core, anyio, annotated-types, starlette, pydantic, h11, annotated-doc, uvicorn, fastapi
+  WARNING: The script uvicorn is installed in '/Users/sonnet/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script fastapi is installed in '/Users/sonnet/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.1 fastapi-0.128.8 h11-0.16.0 pydantic-2.12.5 pydantic-core-2.41.5 starlette-0.49.3 typing-inspection-0.4.2 uvicorn-0.39.0
+WARNING: You are using pip version 21.2.4; however, version 26.0.1 is available.
+You should consider upgrading via the '/Applications/Xcode.app/Contents/Developer/usr/bin/python3 -m pip install --upgrade pip' command.
+[0m
+[0m← [0mWrite scripts/api/test_api.py
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [9:6] Import "pydantic" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py">
+ERROR [11:6] Import "fastapi" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/documents.py">
+ERROR [14:6] Import "fastapi" could not be resolved
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py">
+ERROR [12:6] Import "fastapi" could not be resolved
+</diagnostics>
+[0m
+[0m$ [0mpython3 scripts/api/test_api.py 2>&1
+============================================================
+Knowledge Assistant API Test Suite
+Version: 1.2.0
+============================================================
+
+============================================================
+Testing Module Imports
+============================================================
+✗ Failed to import main app: No module named 'scripts'
+
+============================================================
+Testing Route Registration
+============================================================
+Traceback (most recent call last):
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 262, in <module>
+    sys.exit(main())
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 235, in main
+    "Route Registration": test_app_routes(),
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 67, in test_app_routes
+    from scripts.api.main import app
+ModuleNotFoundError: No module named 'scripts'
+[0m
+[0m$ [0mcd /Users/sonnet/opencode/knowledge-assistant-dev && PYTHONPATH=/Users/sonnet/opencode/knowledge-assistant-dev python3 scripts/api/test_api.py 2>&1
+/Users/sonnet/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py:37: FastAPIDeprecationWarning: `example` has been deprecated, please use `examples` instead
+  q: str = Query(
+
+============================================================
+Knowledge Assistant API Test Suite
+Version: 1.2.0
+============================================================
+
+============================================================
+Testing Module Imports
+============================================================
+✓ Main app imported successfully
+✓ Schema models imported successfully
+✓ Search router imported successfully
+✓ Documents router imported successfully
+✓ Connectors router imported successfully
+
+============================================================
+Testing Route Registration
+============================================================
+✓ /: GET
+✓ /health: GET
+✓ /api: GET
+✗ /api/search: Missing methods {'GET'}
+✗ /api/documents: Missing methods {'GET'}
+✗ /api/documents/{doc_id}: Missing methods {'PUT', 'GET'}
+✓ /api/connectors/status: GET
+✓ /api/connectors/connect: POST
+✓ /api/connectors/disconnect: POST
+✓ /api/connectors/{connector_name}/status: GET
+
+============================================================
+Testing Schema Models
+============================================================
+✓ SearchRequest: test
+✓ SearchResult: rank=1, similarity=0.9
+✓ SearchResponse: 1 results
+✓ DocumentCreate: 12 chars
+✓ DocumentResponse: id=doc_123
+✓ ConnectorInfo: email - connected
+✓ ConnectorStatus: 1 connectors
+✓ ErrorResponse: TestError
+✓ HealthCheckResponse: ok
+
+============================================================
+Testing OpenAPI Specification
+============================================================
+✓ OpenAPI version: 3.1.0
+✓ API title: Knowledge Assistant API
+✓ API version: 1.2.0
+✓ Total paths: 10
+  ✓ /api/search
+  ✓ /api/documents
+  ✓ /api/connectors/status
+
+============================================================
+Test Summary
+============================================================
+Module Imports: ✓ PASS
+Route Registration: ✗ FAIL
+Schema Models: ✓ PASS
+OpenAPI Specification: ✓ PASS
+
+Total: 3/4 tests passed
+
+⚠ Some tests failed
+[0m
+[0m← [0mEdit scripts/api/test_api.py
+Index: /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py
+===================================================================
+--- /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py
++++ /Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py
+@@ -65,14 +65,17 @@
+ print("=" * 60)
+ 
+ from scripts.api.main import app
+ 
+-routes = {}
++# Collect all routes with their methods
++route_methods = {}
+ for route in app.routes:
+     if hasattr(route, 'methods') and hasattr(route, 'path'):
+         path = route.path
+         methods = route.methods or set()
+-        routes[path] = methods
++        if path not in route_methods:
++            route_methods[path] = set()
++        route_methods[path].update(methods)
+ 
+ expected_routes = {
+     "/": {"GET"},
+     "/health": {"GET"},
+@@ -87,10 +90,10 @@
+ }
+ 
+ all_ok = True
+ for path, expected_methods in expected_routes.items():
+-    if path in routes:
+-        actual_methods = routes[path]
++    if path in route_methods:
++        actual_methods = route_methods[path]
+         if expected_methods.issubset(actual_methods):
+             print(f"✓ {path}: {', '.join(sorted(actual_methods))}")
+         else:
+             print(f"✗ {path}: Missing methods {expected_methods - actual_methods}")
+
+[0m
+[0m$ [0mPYTHONPATH=/Users/sonnet/opencode/knowledge-assistant-dev python3 scripts/api/test_api.py 2>&1 | grep -v "NotOpenSSLWarning\|urllib3"
+warnings.warn(
+/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py:37: FastAPIDeprecationWarning: `example` has been deprecated, please use `examples` instead
+  q: str = Query(
+
+============================================================
+Knowledge Assistant API Test Suite
+Version: 1.2.0
+============================================================
+
+============================================================
+Testing Module Imports
+============================================================
+✗ Failed to import main app: cannot import name 'ConnectorConfig' from 'scripts.connectors.config' (/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/config.py)
+
+============================================================
+Testing Route Registration
+============================================================
+Traceback (most recent call last):
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 265, in <module>
+    sys.exit(main())
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 238, in main
+    "Route Registration": test_app_routes(),
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py", line 67, in test_app_routes
+    from scripts.api.main import app
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/main.py", line 24, in <module>
+    from scripts.api.routes import search_router, documents_router, connectors_router
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/__init__.py", line 7, in <module>
+    from .connectors import router as connectors_router
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/connectors.py", line 17, in <module>
+    from scripts.connectors.email import EmailConnector, EmailConfig
+  File "/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/__init__.py", line 13, in <module>
+    from .config import (
+ImportError: cannot import name 'ConnectorConfig' from 'scripts.connectors.config' (/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/config.py)
+[0m
+[0m→ [0mRead scripts/connectors/__init__.py
+[0m→ [0mRead scripts/connectors/config.py
+[0m
+[0m← [0mEdit scripts/connectors/config.py
+Index: /Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/config.py
+===================================================================
+--- /Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/config.py
++++ /Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/config.py
+@@ -445,4 +445,8 @@
+ 
+ 
+ # Global config manager instance
+ config_manager = ConfigManager()
++
++
++# Alias for backward compatibility
++ConnectorConfig = BaseConnectorConfig
+
+[0m
+[0m$ [0mPYTHONPATH=/Users/sonnet/opencode/knowledge-assistant-dev python3 scripts/api/test_api.py 2>&1 | grep -v "NotOpenSSLWarning\|urllib3"
+warnings.warn(
+/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/routes/search.py:37: FastAPIDeprecationWarning: `example` has been deprecated, please use `examples` instead
+  q: str = Query(
+
+============================================================
+Knowledge Assistant API Test Suite
+Version: 1.2.0
+============================================================
+
+============================================================
+Testing Module Imports
+============================================================
+✓ Main app imported successfully
+✓ Schema models imported successfully
+✓ Search router imported successfully
+✓ Documents router imported successfully
+✓ Connectors router imported successfully
+
+============================================================
+Testing Route Registration
+============================================================
+✓ /: GET
+✓ /health: GET
+✓ /api: GET
+✓ /api/search: GET, POST
+✓ /api/documents: GET, POST
+✓ /api/documents/{doc_id}: DELETE, GET, PUT
+✓ /api/connectors/status: GET
+✓ /api/connectors/connect: POST
+✓ /api/connectors/disconnect: POST
+✓ /api/connectors/{connector_name}/status: GET
+
+============================================================
+Testing Schema Models
+============================================================
+✓ SearchRequest: test
+✓ SearchResult: rank=1, similarity=0.9
+✓ SearchResponse: 1 results
+✓ DocumentCreate: 12 chars
+✓ DocumentResponse: id=doc_123
+✓ ConnectorInfo: email - connected
+✓ ConnectorStatus: 1 connectors
+✓ ErrorResponse: TestError
+✓ HealthCheckResponse: ok
+
+============================================================
+Testing OpenAPI Specification
+============================================================
+✓ OpenAPI version: 3.1.0
+✓ API title: Knowledge Assistant API
+✓ API version: 1.2.0
+✓ Total paths: 10
+  ✓ /api/search
+  ✓ /api/documents
+  ✓ /api/connectors/status
+
+============================================================
+Test Summary
+============================================================
+Module Imports: ✓ PASS
+Route Registration: ✓ PASS
+Schema Models: ✓ PASS
+OpenAPI Specification: ✓ PASS
+
+Total: 4/4 tests passed
+
+🎉 All tests passed!
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[x] 创建连接器状态 API 路由 (routes/connectors.py)
+[x] 创建 FastAPI 主应用 (main.py)
+[x] 测试 API 端点
+[ ] 编写集成报告
+[0m
+[0m$ [0mmkdir -p reports
+[0m
+[0m← [0mWrite reports/integration-report-v1.2.md
+Wrote file successfully.
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/email.py">
+ERROR [169:32] Cannot assign to attribute "_client" for class "EmailConnector*"
+  Type "IMAP4" is not assignable to type "IMAP4_SSL | None"
+    "IMAP4" is not assignable to "IMAP4_SSL"
+    "IMAP4" is not assignable to "None"
+ERROR [176:26] "login" is not a known attribute of "None"
+ERROR [434:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [460:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [515:17] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [526:29] "decode" is not a known attribute of "None"
+ERROR [528:29] "decode" is not a known attribute of "None"
+ERROR [608:47] Argument of type "bytes" cannot be assigned to parameter "message_set" of type "str" in function "fetch"
+  "bytes" is not assignable to "str"
+ERROR [616:48] Argument of type "bytes | None" cannot be assigned to parameter "s" of type "bytes | bytearray" in function "message_from_bytes"
+  Type "bytes | None" is not assignable to type "bytes | bytearray"
+    Type "None" is not assignable to type "bytes | bytearray"
+      "None" is not assignable to "bytes"
+      "None" is not assignable to "bytearray"
+ERROR [640:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [645:45] Cannot access attribute "decode" for class "Message[str, str]"
+  Attribute "decode" is unknown
+ERROR [708:36] Cannot access attribute "decode" for class "tuple[bytes, bytes]"
+  Attribute "decode" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/models/schemas.py">
+ERROR [17:18] No overloads for "Field" match the provided arguments
+  Argument types: (Unknown, Literal['Search query text'], Literal[1], Literal['Python异步编程'])
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/api/test_api.py">
+ERROR [73:26] Cannot access attribute "path" for class "BaseRoute"
+  Attribute "path" is unknown
+ERROR [74:29] Cannot access attribute "methods" for class "BaseRoute"
+  Attribute "methods" is unknown
+</diagnostics>
+
+LSP errors detected in other files:
+<diagnostics file="/Users/sonnet/opencode/knowledge-assistant-dev/scripts/connectors/__init__.py">
+ERROR [12:48] "with_retry" is unknown import symbol
+</diagnostics>
+[0m
+[0m# [0mTodos
+[x] 创建 API 目录结构
+[x] 创建 Pydantic 模型 (schemas.py)
+[x] 创建搜索 API 路由 (routes/search.py)
+[x] 创建文档管理 API 路由 (routes/documents.py)
+[x] 创建连接器状态 API 路由 (routes/connectors.py)
+[x] 创建 FastAPI 主应用 (main.py)
+[x] 测试 API 端点
+[x] 编写集成报告
+[0m
+[0m$ [0mls -la scripts/api/ && echo "---" && ls -la scripts/api/routes/ && echo "---" && ls -la scripts/api/models/
+total 40
+-rw-r--r--  1 sonnet  staff   169  3月  8 22:24 __init__.py
+drwxr-xr-x  7 sonnet  staff   224  3月  8 22:31 .
+drwxr-xr-x  9 sonnet  staff   288  3月  8 22:21 ..
+-rw-r--r--  1 sonnet  staff  7754  3月  8 22:29 main.py
+drwxr-xr-x  4 sonnet  staff   128  3月  8 22:25 models
+drwxr-xr-x  6 sonnet  staff   192  3月  8 22:28 routes
+-rw-r--r--  1 sonnet  staff  7976  3月  8 22:31 test_api.py
+---
+total 72
+-rw-r--r--  1 sonnet  staff    244  3月  8 22:24 __init__.py
+drwxr-xr-x  6 sonnet  staff    192  3月  8 22:28 .
+drwxr-xr-x  7 sonnet  staff    224  3月  8 22:31 ..
+-rw-r--r--  1 sonnet  staff  10845  3月  8 22:29 connectors.py
+-rw-r--r--  1 sonnet  staff  11377  3月  8 22:27 documents.py
+-rw-r--r--  1 sonnet  staff   7026  3月  8 22:26 search.py
+---
+total 32
+-rw-r--r--  1 sonnet  staff   431  3月  8 22:24 __init__.py
+drwxr-xr-x  4 sonnet  staff   128  3月  8 22:25 .
+drwxr-xr-x  7 sonnet  staff   224  3月  8 22:31 ..
+-rw-r--r--  1 sonnet  staff  9691  3月  8 22:25 schemas.py
+[0m
+[0m$ [0mls -la reports/ && echo "---" && wc -l reports/integration-report-v1.2.md
+total 48
+drwxr-xr-x   4 sonnet  staff   128  3月  8 22:34 .
+drwxr-xr-x  49 sonnet  staff  1568  3月  8 22:06 ..
+-rw-r--r--   1 sonnet  staff  8268  3月  8 22:34 ai-report-v1.2.md
+-rw-r--r--   1 sonnet  staff  9736  3月  8 22:34 integration-report-v1.2.md
+---
+     412 reports/integration-report-v1.2.md
+[0m
+## ✅ 任务完成总结
+
+我已成功完成 **TASK-INT1: Web UI Backend API** 任务。以下是完成的工作：
+
+### 📁 创建的文件
+
+**API 核心文件**：
+- `scripts/api/main.py` - FastAPI 主应用（7.7KB）
+- `scripts/api/models/schemas.py` - Pydantic 模型（9.7KB）
+- `scripts/api/routes/search.py` - 搜索 API（7.0KB）
+- `scripts/api/routes/documents.py` - 文档管理 API（11.4KB）
+- `scripts/api/routes/connectors.py` - 连接器状态 API（10.8KB）
+- `scripts/api/test_api.py` - API 测试脚本（8.0KB）
+
+**配置文件**：
+- `scripts/api/__init__.py`
+- `scripts/api/routes/__init__.py`
+- `scripts/api/models/__init__.py`
+
+**报告文件**：
+- `reports/integration-report-v1.2.md` - 详细集成报告（412行，9.7KB）
+
+### 🎯 实现的功能
+
+#### 1. 搜索 API
+- `GET /api/search` - 使用查询参数搜索
+- `POST /api/search` - 使用请求体搜索（支持过滤器和阈值）
+
+#### 2. 文档管理 API
+- `GET /api/documents` - 列出文档（支持分页和分类过滤）
+- `POST /api/documents` - 创建文档
+- `GET /api/documents/{doc_id}` - 获取文档详情
+- `PUT /api/documents/{doc_id}` - 更新文档
+- `DELETE /api/documents/{doc_id}` - 删除文档
+
+#### 3. 连接器状态 API
+- `GET /api/connectors/status` - 获取所有连接器状态
+- `POST /api/connectors/connect` - 连接连接器
+- `POST /api/connectors/disconnect` - 断开连接器
+- `GET /api/connectors/{name}/status` - 获取单个连接器状态
+
+#### 4. 其他端点
+- `GET /` - API 信息
+- `GET /health` - 健康检查
+- `GET /api` - API 端点列表
+
+### 🧪 测试结果
+
+所有测试均通过：
+- ✅ 模块导入测试
+- ✅ 路由注册测试
+- ✅ Schema 模型测试
+- ✅ OpenAPI 规范测试
+
+### 📚 OpenAPI 文档
+
+启动服务后可访问：
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+- OpenAPI JSON: `http://localhost:8000/openapi.json`
+
+### 🚀 启动方式
+
+```bash
+# 开发模式
+PYTHONPATH=/Users/sonnet/opencode/knowledge-assistant-dev python3 scripts/api/main.py
+
+# 或使用 uvicorn
+PYTHONPATH=/Users/sonnet/opencode/knowledge-assistant-dev python3 -m uvicorn scripts.api.main:app --reload
+```
+
+### 🔧 修复的问题
+
+1. **ConnectorConfig 导入错误** - 在 `config.py` 中添加别名
+2. **FastAPI 依赖** - 安装 fastapi、uvicorn、pydantic
+
+完整的集成报告已写入 `reports/integration-report-v1.2.md`，包含详细的 API 端点列表、测试结果、使用示例和后续工作建议。

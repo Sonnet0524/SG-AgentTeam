@@ -2,12 +2,16 @@
 Semantic search tool for querying vector indexes.
 
 Implements TASK-AI2: semantic_search function.
+v1.2: Added pagination, lazy loading, and caching for performance optimization.
 """
 
 import os
 import time
 import logging
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Iterator
+from dataclasses import dataclass
+from functools import lru_cache
+import hashlib
 
 # Add parent directory to path for imports
 import sys
@@ -20,6 +24,66 @@ logger = logging.getLogger(__name__)
 
 # Global encoder cache to avoid reloading
 _encoder_cache = {}
+
+# v1.2: Search result cache
+_search_cache = {}
+_cache_max_size = 100
+
+
+@dataclass
+class SearchResult:
+    """Container for a single search result with lazy loading support."""
+    rank: int
+    similarity: float
+    index: int
+    metadata: Dict
+    _snippet: str = ""
+    _full_chunk: str = ""
+    _manager: Optional['IndexManager'] = None
+    
+    @property
+    def snippet(self) -> str:
+        """Get snippet (first 200 chars)."""
+        return self._snippet[:200]
+    
+    def get_full_content(self) -> str:
+        """Lazily load full chunk content."""
+        if not self._full_chunk and self._manager:
+            # Type-safe access to vector_store
+            manager = self._manager
+            if hasattr(manager, 'vector_store') and manager.vector_store:
+                chunk = manager.vector_store.get_chunk(self.index)
+                self._full_chunk = chunk if chunk else ""
+        return self._full_chunk
+
+
+@dataclass
+class PaginatedResults:
+    """Container for paginated search results."""
+    results: List[SearchResult]
+    total_available: int
+    page: int
+    page_size: int
+    total_pages: int
+    has_next: bool
+    has_previous: bool
+    query_time_ms: float
+
+
+def _get_cache_key(query: str, top_k: int, filters: Optional[Dict]) -> str:
+    """Generate cache key for search query."""
+    filter_str = str(sorted(filters.items())) if filters else ""
+    key = f"{query}:{top_k}:{filter_str}"
+    return hashlib.md5(key.encode()).hexdigest()
+
+
+def _manage_cache_size():
+    """Ensure cache doesn't exceed max size."""
+    if len(_search_cache) > _cache_max_size:
+        # Remove oldest entries (simple FIFO)
+        keys_to_remove = list(_search_cache.keys())[:len(_search_cache) - _cache_max_size]
+        for key in keys_to_remove:
+            del _search_cache[key]
 
 
 def _get_encoder(
@@ -270,3 +334,175 @@ def get_search_suggestions(
             seen.add(suggestion)
     
     return suggestions[:top_k]
+
+
+def semantic_search_paginated(
+    query: str,
+    index_path: str = ".ka-index",
+    page: int = 1,
+    page_size: int = 10,
+    filters: Optional[Dict] = None,
+    threshold: Optional[float] = None,
+    model_name: str = "BAAI/bge-small-zh-v1.5",
+    use_cache: bool = True
+) -> PaginatedResults:
+    """
+    Perform paginated semantic search.
+    
+    v1.2: Optimized for large result sets with pagination support.
+    
+    Args:
+        query: Search query text
+        index_path: Path to the index directory
+        page: Page number (1-indexed)
+        page_size: Number of results per page
+        filters: Optional metadata filters
+        threshold: Optional similarity threshold
+        model_name: Embedding model name
+        use_cache: Whether to use result caching (default: True)
+    
+    Returns:
+        PaginatedResults object with pagination metadata
+    
+    Example:
+        >>> results = semantic_search_paginated("Python", page=1, page_size=5)
+        >>> print(results.total_available)
+        100
+        >>> print(results.has_next)
+        True
+    """
+    start_time = time.time()
+    
+    # Handle empty query
+    if not query or len(query.strip()) == 0:
+        return PaginatedResults(
+            results=[],
+            total_available=0,
+            page=page,
+            page_size=page_size,
+            total_pages=0,
+            has_next=False,
+            has_previous=False,
+            query_time_ms=0
+        )
+    
+    # Check cache
+    cache_key = None
+    if use_cache:
+        cache_key = _get_cache_key(query, page_size * 10, filters)  # Cache more for pagination
+        if cache_key in _search_cache:
+            cached = _search_cache[cache_key]
+            # Apply pagination to cached results
+            total = len(cached)
+            start_idx = (page - 1) * page_size
+            end_idx = start_idx + page_size
+            page_results = cached[start_idx:end_idx]
+            
+            query_time = (time.time() - start_time) * 1000
+            total_pages = (total + page_size - 1) // page_size
+            
+            return PaginatedResults(
+                results=page_results,
+                total_available=total,
+                page=page,
+                page_size=page_size,
+                total_pages=total_pages,
+                has_next=page < total_pages,
+                has_previous=page > 1,
+                query_time_ms=query_time
+            )
+    
+    try:
+        # Load index
+        manager = IndexManager(index_path=index_path)
+        
+        if not manager.index_exists() or not manager.load_index():
+            return PaginatedResults(
+                results=[],
+                total_available=0,
+                page=page,
+                page_size=page_size,
+                total_pages=0,
+                has_next=False,
+                has_previous=False,
+                query_time_ms=(time.time() - start_time) * 1000
+            )
+        
+        # Encode query
+        encoder = _get_encoder(model_name=model_name)
+        query_embedding = encoder.encode_query(query)
+        
+        # Search with larger top_k to support pagination
+        search_k = min(page * page_size * 2, 1000)  # Cap at 1000
+        raw_results = manager.search(
+            query_vector=query_embedding,
+            top_k=search_k,
+            filters=filters
+        )
+        
+        # Apply threshold
+        if threshold is not None:
+            raw_results = [r for r in raw_results if r['similarity'] >= threshold]
+        
+        # Convert to SearchResult objects with lazy loading
+        all_results = []
+        for i, r in enumerate(raw_results):
+            result = SearchResult(
+                rank=r['rank'],
+                similarity=r['similarity'],
+                index=r['index'],
+                metadata=r['metadata'],
+                _snippet=r.get('snippet', ''),
+                _manager=manager
+            )
+            all_results.append(result)
+        
+        # Cache results
+        if use_cache and cache_key:
+            _manage_cache_size()
+            _search_cache[cache_key] = all_results
+        
+        # Apply pagination
+        total = len(all_results)
+        start_idx = (page - 1) * page_size
+        end_idx = start_idx + page_size
+        page_results = all_results[start_idx:end_idx]
+        
+        query_time = (time.time() - start_time) * 1000
+        total_pages = (total + page_size - 1) // page_size if total > 0 else 0
+        
+        logger.info(
+            f"Paginated search: page {page}/{total_pages}, "
+            f"{len(page_results)} results in {query_time:.1f}ms"
+        )
+        
+        return PaginatedResults(
+            results=page_results,
+            total_available=total,
+            page=page,
+            page_size=page_size,
+            total_pages=total_pages,
+            has_next=page < total_pages,
+            has_previous=page > 1,
+            query_time_ms=query_time
+        )
+        
+    except Exception as e:
+        logger.error(f"Paginated search failed: {e}")
+        return PaginatedResults(
+            results=[],
+            total_available=0,
+            page=page,
+            page_size=page_size,
+            total_pages=0,
+            has_next=False,
+            has_previous=False,
+            query_time_ms=(time.time() - start_time) * 1000
+        )
+
+
+def clear_search_cache():
+    """Clear the search result cache."""
+    global _search_cache
+    _search_cache = {}
+    logger.info("Search cache cleared")

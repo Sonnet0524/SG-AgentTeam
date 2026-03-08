@@ -1,0 +1,44 @@
+version: "1.1.0"
+level: L3
+role: application-project
+name: knowledge-assistant-dev
+description: 应用项目层 - 知识助手开发项目
+
+hierarchy:
+  level: L3
+  position: 应用项目层
+  relationship:
+    depends_on: [L0, L1, L2]
+    type: 具体业务实现
+
+dependencies:
+  L0:
+    name: SEARCH-R
+    path: ../SEARCH-R
+    type: methodology
+    description: 研究方法论支撑
+  L1:
+    name: agent-team-research
+    path: ../agent-team-research
+    type: research-support
+    description: 研究能力支撑
+    submodule:
+      enabled: true
+      path: .agent-team/research
+  L2:
+    name: AgentTeam-Template
+    path: ../AgentTeam-Template
+    type: project-template
+    description: 项目管理框架
+    submodule:
+      enabled: true
+      path: .agent-team/template
+
+collaboration:
+  feedback_path: collaboration/feedback/
+  dependency_docs: collaboration/dependencies/
+
+migration:
+  status: in_progress
+  started: "2026-03-08"
+  notes: 正在进行多仓库架构调整，研究内容将迁移到L1

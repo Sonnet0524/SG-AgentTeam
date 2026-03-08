@@ -2,6 +2,7 @@
 Vector store using FAISS for efficient similarity search.
 
 Provides HNSW-based vector indexing and retrieval.
+v1.2: Added memory mapping and index compression for large-scale datasets.
 """
 
 import faiss
@@ -10,6 +11,7 @@ import os
 import json
 from typing import List, Dict, Optional, Tuple
 import logging
+import pickle
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +23,14 @@ class VectorStore:
     Uses HNSW (Hierarchical Navigable Small World) index for fast
     approximate nearest neighbor search.
     
+    v1.2: Supports memory-mapped indices and compression for large datasets.
+    
     Attributes:
         dimension: Vector dimension
         n_connections: HNSW connections per node (M parameter)
         index: FAISS index instance
         metadata_store: List of metadata for each vector
+        use_mmap: Whether to use memory mapping for large indices
     
     Example:
         >>> store = VectorStore(dimension=512)
@@ -37,7 +42,9 @@ class VectorStore:
     def __init__(
         self,
         dimension: int = 512,
-        n_connections: int = 32
+        n_connections: int = 32,
+        use_compression: bool = False,
+        compression_bits: int = 8
     ):
         """
         Initialize the vector store.
@@ -45,27 +52,42 @@ class VectorStore:
         Args:
             dimension: Vector dimension (default: 512 for bge-small-zh)
             n_connections: HNSW M parameter - connections per node (default: 32)
+            use_compression: Use PQ compression for memory efficiency (default: False)
+            compression_bits: Bits per subvector for PQ compression (default: 8)
         """
         self.dimension = dimension
         self.n_connections = n_connections
+        self.use_compression = use_compression
+        self.compression_bits = compression_bits
+        self._mmap_mode = False
         
-        # Create HNSW index
-        # M: number of connections per node
-        # IndexHNSWFlat uses inner product (IP) similarity
-        self.index = faiss.IndexHNSWFlat(dimension, n_connections)
-        
-        # HNSW parameters
-        self.index.hnsw.efSearch = 32  # Search depth
-        self.index.hnsw.efConstruction = 40  # Construction depth
+        # Create appropriate index type
+        if use_compression:
+            # Use IVF + PQ for memory efficiency
+            nlist = 100  # Number of clusters
+            # Create quantizer first
+            quantizer = faiss.IndexHNSWFlat(dimension, n_connections)
+            self.index = faiss.IndexIVFPQ(quantizer, dimension, nlist, 8, compression_bits)
+            self._is_trained = False
+            logger.info(
+                f"VectorStore initialized with IVF-PQ compression: "
+                f"dimension={dimension}, nlist={nlist}, bits={compression_bits}"
+            )
+        else:
+            # Standard HNSW index
+            self.index = faiss.IndexHNSWFlat(dimension, n_connections)
+            self._is_trained = True
+            # HNSW parameters
+            self.index.hnsw.efSearch = 32  # Search depth
+            self.index.hnsw.efConstruction = 40  # Construction depth
+            logger.info(
+                f"VectorStore initialized: dimension={dimension}, "
+                f"connections={n_connections}"
+            )
         
         # Metadata storage
         self.metadata_store: List[Dict] = []
         self.chunk_store: List[str] = []
-        
-        logger.info(
-            f"VectorStore initialized: dimension={dimension}, "
-            f"connections={n_connections}"
-        )
     
     def add_vectors(
         self,
@@ -202,12 +224,15 @@ class VectorStore:
             return self.chunk_store[index]
         return None
     
-    def save(self, index_path: str) -> bool:
+    def save(self, index_path: str, use_mmap: bool = False) -> bool:
         """
         Save the vector store to disk.
         
+        v1.2: Added memory-mapped index support for large datasets.
+        
         Args:
             index_path: Directory path to save the index
+            use_mmap: Save in memory-mappable format (default: False)
         
         Returns:
             True if successful
@@ -230,9 +255,19 @@ class VectorStore:
                 json.dump({
                     'dimension': self.dimension,
                     'n_connections': self.n_connections,
+                    'use_compression': self.use_compression,
+                    'compression_bits': self.compression_bits,
                     'metadata_store': self.metadata_store,
                     'chunk_store': self.chunk_store
                 }, f, ensure_ascii=False, indent=2)
+            
+            # Save config for mmap support
+            config_file = os.path.join(index_path, 'config.pkl')
+            with open(config_file, 'wb') as f:
+                pickle.dump({
+                    'use_mmap': use_mmap,
+                    'use_compression': self.use_compression
+                }, f)
             
             logger.info(f"VectorStore saved to {index_path}")
             return True
@@ -241,19 +276,23 @@ class VectorStore:
             logger.error(f"Failed to save VectorStore: {e}")
             return False
     
-    def load(self, index_path: str) -> bool:
+    def load(self, index_path: str, use_mmap: bool = False) -> bool:
         """
         Load the vector store from disk.
         
+        v1.2: Added memory-mapped loading for reduced memory footprint.
+        
         Args:
             index_path: Directory path containing saved index
+            use_mmap: Load index with memory mapping (default: False)
+                Memory mapping allows loading indices larger than RAM.
         
         Returns:
             True if successful
         
         Example:
             >>> store = VectorStore(512)
-            >>> store.load('.ka-index')
+            >>> store.load('.ka-index', use_mmap=True)
         """
         try:
             # Load FAISS index
@@ -262,7 +301,14 @@ class VectorStore:
                 logger.error(f"Index file not found: {index_file}")
                 return False
             
-            self.index = faiss.read_index(index_file)
+            if use_mmap:
+                # Use IO reader for memory mapping
+                self.index = faiss.read_index(index_file, faiss.IO_FLAG_MMAP)
+                self._mmap_mode = True
+                logger.info(f"Index loaded with memory mapping from {index_path}")
+            else:
+                self.index = faiss.read_index(index_file)
+                self._mmap_mode = False
             
             # Load metadata and chunks
             meta_file = os.path.join(index_path, 'metadata.json')
@@ -270,12 +316,14 @@ class VectorStore:
                 data = json.load(f)
                 self.dimension = data.get('dimension', self.dimension)
                 self.n_connections = data.get('n_connections', self.n_connections)
+                self.use_compression = data.get('use_compression', False)
+                self.compression_bits = data.get('compression_bits', 8)
                 self.metadata_store = data.get('metadata_store', [])
                 self.chunk_store = data.get('chunk_store', [])
             
             logger.info(
                 f"VectorStore loaded from {index_path}. "
-                f"Vectors: {self.index.ntotal}"
+                f"Vectors: {self.index.ntotal}, MMap: {self._mmap_mode}"
             )
             return True
             
@@ -287,10 +335,16 @@ class VectorStore:
         """
         Clear all vectors and metadata from the store.
         """
-        # Recreate index
-        self.index = faiss.IndexHNSWFlat(self.dimension, self.n_connections)
-        self.index.hnsw.efSearch = 32
-        self.index.hnsw.efConstruction = 40
+        # Recreate appropriate index type
+        if self.use_compression:
+            quantizer = faiss.IndexHNSWFlat(self.dimension, self.n_connections)
+            self.index = faiss.IndexIVFPQ(quantizer, self.dimension, 100, 8, self.compression_bits)
+            self._is_trained = False
+        else:
+            self.index = faiss.IndexHNSWFlat(self.dimension, self.n_connections)
+            self._is_trained = True
+            self.index.hnsw.efSearch = 32
+            self.index.hnsw.efConstruction = 40
         
         # Clear metadata
         self.metadata_store = []
@@ -305,10 +359,78 @@ class VectorStore:
         Returns:
             Dictionary with store statistics
         """
-        return {
+        stats = {
             'total_vectors': self.index.ntotal,
             'dimension': self.dimension,
             'n_connections': self.n_connections,
             'metadata_count': len(self.metadata_store),
-            'chunk_count': len(self.chunk_store)
+            'chunk_count': len(self.chunk_store),
+            'use_compression': self.use_compression,
+            'mmap_mode': self._mmap_mode
+        }
+        
+        # Add memory usage estimate
+        stats['estimated_memory_mb'] = self._estimate_memory_usage()
+        
+        return stats
+    
+    def _estimate_memory_usage(self) -> float:
+        """
+        Estimate memory usage in MB.
+        
+        Returns:
+            Estimated memory in MB
+        """
+        # Vector memory
+        n_vectors = self.index.ntotal
+        dimension = self.dimension
+        
+        if self.use_compression:
+            # PQ uses less memory (approximately bits/8 bytes per vector)
+            vector_memory = n_vectors * dimension * (self.compression_bits / 8) / 8
+        else:
+            # Float32 = 4 bytes per dimension
+            vector_memory = n_vectors * dimension * 4
+        
+        # Metadata memory (rough estimate)
+        meta_memory = len(self.metadata_store) * 200  # ~200 bytes per metadata dict
+        chunk_memory = sum(len(c) for c in self.chunk_store)
+        
+        total_bytes = vector_memory + meta_memory + chunk_memory
+        return total_bytes / (1024 * 1024)
+    
+    def get_memory_usage(self) -> Dict:
+        """
+        Get detailed memory usage information.
+        
+        v1.2: Added for memory monitoring.
+        
+        Returns:
+            Dictionary with memory usage breakdown
+        """
+        n_vectors = self.index.ntotal
+        dimension = self.dimension
+        
+        # Calculate vector memory
+        if self.use_compression:
+            vector_bytes = n_vectors * dimension * (self.compression_bits / 8) / 8
+        else:
+            vector_bytes = n_vectors * dimension * 4
+        
+        # Calculate metadata memory
+        meta_bytes = len(self.metadata_store) * 200
+        
+        # Calculate chunk memory
+        chunk_bytes = sum(len(c.encode('utf-8')) for c in self.chunk_store)
+        
+        total_bytes = vector_bytes + meta_bytes + chunk_bytes
+        
+        return {
+            'total_mb': round(total_bytes / (1024 * 1024), 2),
+            'vectors_mb': round(vector_bytes / (1024 * 1024), 2),
+            'metadata_mb': round(meta_bytes / (1024 * 1024), 2),
+            'chunks_mb': round(chunk_bytes / (1024 * 1024), 2),
+            'vector_count': n_vectors,
+            'compression_enabled': self.use_compression,
+            'mmap_mode': self._mmap_mode
         }

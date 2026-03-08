@@ -2,6 +2,7 @@
 Index manager for coordinating vector store operations.
 
 Provides high-level interface for index building and management.
+v1.2: Added incremental indexing support for batch processing.
 """
 
 import os
@@ -20,6 +21,8 @@ class IndexManager:
     
     Coordinates between encoder and vector store to build
     and manage semantic indexes.
+    
+    v1.2: Supports incremental indexing for large datasets.
     
     Attributes:
         index_path: Path to store the index
@@ -42,6 +45,47 @@ class IndexManager:
         self.vector_store: Optional[VectorStore] = None
         
         logger.info(f"IndexManager initialized with path: {index_path}")
+    
+    def initialize_empty_index(self, dimension: int = 512) -> None:
+        """
+        Initialize an empty vector store for incremental indexing.
+        
+        v1.2: Used for batch processing large datasets.
+        
+        Args:
+            dimension: Vector dimension
+        """
+        self.vector_store = VectorStore(dimension=dimension)
+        logger.info(f"Initialized empty index with dimension={dimension}")
+    
+    def add_to_index(
+        self,
+        vectors,
+        metadata: List[Dict],
+        chunks: List[str]
+    ) -> int:
+        """
+        Add vectors to existing index incrementally.
+        
+        v1.2: Used for batch processing large datasets.
+        
+        Args:
+            vectors: Numpy array of vectors
+            metadata: List of metadata dicts
+            chunks: List of text chunks
+        
+        Returns:
+            Number of vectors added
+        """
+        if not self.vector_store:
+            logger.error("Index not initialized. Call initialize_empty_index first.")
+            return 0
+        
+        return self.vector_store.add_vectors(
+            vectors,
+            metadata=metadata,
+            chunks=chunks
+        )
     
     def build_index(
         self,

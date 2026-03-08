@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Knowledge Assistant - Semantic Search and Document Management">
+  <meta name="theme-color" content="#3b82f6">
+  
+  <title>Knowledge Assistant</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="app-logo">
+        <span class="app-logo-icon">📚</span>
+        <span class="app-logo-text">Knowledge Assistant</span>
+      </div>
+      
+      <nav class="app-nav">
+        <button class="nav-btn active" data-tab="search">
+          🔍 <span>Search</span>
+        </button>
+        <button class="nav-btn" data-tab="documents">
+          📄 <span>Documents</span>
+        </button>
+        <button class="nav-btn" data-tab="connectors">
+          🔌 <span>Connectors</span>
+        </button>
+      </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="app-main" id="mainContent">
+      <!-- Content will be loaded dynamically -->
+      <div class="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading...</div>
+      </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer style="text-align: center; padding: var(--spacing-lg); color: var(--color-text-tertiary); font-size: var(--font-sm);">
+      Knowledge Assistant v1.2.0 | 
+      <a href="/docs" target="_blank" style="color: var(--color-primary); text-decoration: none;">API Docs</a>
+    </footer>
+  </div>
+  
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+  
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/components/search.js"></script>
+  <script src="js/components/documents.js"></script>
+  <script src="js/components/connectors.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
