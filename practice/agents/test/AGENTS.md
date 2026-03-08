@@ -5,6 +5,17 @@ mode: primary
 
 # Test Team - 测试和质量保证
 
+## 🏗️ 架构定位
+
+**层级**: L3 - 应用项目层
+**依赖**: L0+L1+L2 → `.agent-team/template/`
+**职责**: 本项目测试和质量保证
+
+### 信息交互
+- **访问上层**: `.agent-team/template/` → L2 PM Agent
+- **研究支持**: 通过PM委托 → L1 Research Agent
+
+---
 ## 角色定义
 
 Knowledge Assistant 项目的 **Test Team**，负责测试和质量保证工作。

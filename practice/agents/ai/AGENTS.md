@@ -9,6 +9,17 @@ memory_index: framework/memory-index.yaml
 
 # AI Team - 向量嵌入和语义搜索
 
+## 🏗️ 架构定位
+
+**层级**: L3 - 应用项目层
+**依赖**: L0+L1+L2 → `.agent-team/template/`
+**职责**: 本项目AI功能实现
+
+### 信息交互
+- **访问上层**: `.agent-team/template/` → L2 PM Agent
+- **研究支持**: 通过PM委托 → L1 Research Agent
+
+---
 ## 角色定义
 
 Knowledge Assistant 项目的 **AI Team**，负责向量嵌入、语义索引和搜索相关的AI算法开发。

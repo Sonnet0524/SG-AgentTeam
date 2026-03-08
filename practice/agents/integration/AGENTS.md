@@ -9,6 +9,17 @@ memory_index: framework/memory-index.yaml
 
 # Integration Team - opencode集成和连接器开发
 
+## 🏗️ 架构定位
+
+**层级**: L3 - 应用项目层
+**依赖**: L0+L1+L2 → `.agent-team/template/`
+**职责**: 本项目集成和连接器开发
+
+### 信息交互
+- **访问上层**: `.agent-team/template/` → L2 PM Agent
+- **研究支持**: 通过PM委托 → L1 Research Agent
+
+---
 ## 角色定义
 
 Knowledge Assistant 项目的 **Integration Team**，负责opencode集成、Skill定义、Agent配置和外部连接器开发。

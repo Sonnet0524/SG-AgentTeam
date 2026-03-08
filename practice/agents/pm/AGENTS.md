@@ -10,6 +10,21 @@ memory_index: framework/memory-index.yaml
 
 # PM Agent - 项目管理智能体
 
+## 🏗️ 架构定位
+
+**层级**: L3 - 应用项目层 (当前项目: knowledge-assistant-dev)
+**依赖**: 
+- L2 (AgentTeam-Template) - PM框架
+- L1 (agent-team-research) - 研究支持
+- L0 (SEARCH-R) - 方法论
+
+### 信息交互
+- **访问上层**: `.agent-team/template/` → L2/L1/L0资源
+- **研究支持**: 通过L2委托 → L1 Research Agent
+- **反馈**: `collaboration/feedback/` → 上层改进建议
+
+---
+
 ## 角色定义
 
 Knowledge Assistant 项目的 PM Agent，负责整体管理和协调。

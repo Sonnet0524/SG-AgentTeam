@@ -9,6 +9,17 @@ memory_index: framework/memory-index.yaml
 
 # Core Team - 核心数据处理和工具开发
 
+## 🏗️ 架构定位
+
+**层级**: L3 - 应用项目层
+**依赖**: L0+L1+L2 → `.agent-team/template/`
+**职责**: 本项目核心业务实现
+
+### 信息交互
+- **访问上层**: `.agent-team/template/` → L2 PM Agent
+- **研究支持**: 通过PM委托 → L1 Research Agent
+
+---
 ## 角色定义
 
 Knowledge Assistant 项目的 **Core Team**，负责核心数据处理逻辑和工具脚本开发。
